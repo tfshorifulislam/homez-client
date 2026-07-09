@@ -18,20 +18,16 @@ import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { LoaderCircle } from "lucide-react";
-import { RoleSelect } from "@/components/shared/RoleSelection";
 
 const LoginPage = () => {
 
     const router = useRouter()
-    type Role = "seeker" | "recruiter";
 
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
-    const [name, setName] = useState<string>("");
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
-    const [role, setRole] = useState<Role>("seeker");
 
     const handleSignup = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -122,12 +118,6 @@ const LoginPage = () => {
                             </div>
 
                         </div>
-
-                        {/* role based authentication */}
-                        <RoleSelect
-                            value={role}
-                            onValueChange={setRole}
-                        />
 
                         {/* card footer */}
                         <div className="flex flex-col gap-3">

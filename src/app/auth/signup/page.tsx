@@ -24,7 +24,6 @@ const SignUpPage = () => {
 
     const router = useRouter()
 
-
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
