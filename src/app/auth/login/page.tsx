@@ -18,6 +18,8 @@ import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { LoaderCircle } from "lucide-react";
+import { authClient } from "@/lib/auth-client";
+import { toast } from "react-toastify";
 
 const LoginPage = () => {
 
@@ -29,10 +31,20 @@ const LoginPage = () => {
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
 
-    const handleSignup = async (e: FormEvent<HTMLFormElement>) => {
+    const handleSignIn = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        // your code
+        const { error } = await authClient.signIn.email({
+            email,
+            password,
+        })
+
+        if (error) {
+            return toast.error(error.message);
+        }
+
+        toast.success("Welcome Back!");
+        router.push("/");
     };
 
     return (
@@ -59,7 +71,7 @@ const LoginPage = () => {
 
                 <CardContent>
 
-                    <form className="space-y-5" onSubmit={handleSignup}>
+                    <form className="space-y-5" onSubmit={handleSignIn}>
                         <div className="space-y-2">
                             <Label htmlFor="email">
                                 Email Address
