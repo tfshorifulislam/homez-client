@@ -19,6 +19,8 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { LoaderCircle } from "lucide-react";
 import { Role, RoleSelect } from "@/components/shared/RoleSelection";
+import { authClient } from "@/lib/auth-client";
+import { toast } from "react-toastify";
 
 const SignUpPage = () => {
 
@@ -35,7 +37,20 @@ const SignUpPage = () => {
     const handleSignup = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        // your code
+        const { error } = await authClient.signUp.email({
+            email,
+            password,
+            name,
+            role,
+        })
+
+        if (error) {
+            return toast.error(error.message);
+        }
+
+        toast.success("Account created successfully!");
+        router.push("/");
+
     };
 
     return (
