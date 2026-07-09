@@ -37,21 +37,31 @@ const SignUpPage = () => {
     const handleSignup = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        const { error } = await authClient.signUp.email({
-            email,
-            password,
-            name,
-            role,
-        })
+        try {
+            setIsLoading(true);
 
-        if (error) {
-            return toast.error(error.message);
+            const { error } = await authClient.signUp.email({
+                email,
+                password,
+                name,
+                role,
+            });
+
+            if (error) {
+                toast.error(error.message);
+                return;
+            }
+
+            toast.success("Account created successfully!");
+            router.push("/");
+        } catch (error) {
+            console.error(error);
+            toast.error("Something went wrong. Please try again.");
+        } finally {
+            setIsLoading(false);
         }
-
-        toast.success("Account created successfully!");
-        router.push("/");
-
     };
+
 
     return (
         <div className="flex min-h-screen items-center justify-center px-4 bg-white bg-[radial-gradient(#d4d4d8_1px,transparent_1px)] bg-size-[24px_24px]">
