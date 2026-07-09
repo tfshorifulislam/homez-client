@@ -40,7 +40,7 @@ const SignUpPage = () => {
     };
 
     return (
-        <div className="flex min-h-screen items-center justify-center px-4">
+        <div className="flex min-h-screen items-center justify-center px-4 bg-white bg-[radial-gradient(#d4d4d8_1px,transparent_1px)] [bg-size:24px_24px]">
 
             <Card className="w-full max-w-md border-none shadow-xl">
 
