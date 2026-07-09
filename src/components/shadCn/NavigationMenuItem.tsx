@@ -1,12 +1,7 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import Link from "next/link"
-import {
-    CircleAlertIcon,
-    CircleCheckIcon,
-    CircleDashedIcon,
-} from "lucide-react"
+import * as React from "react";
+import Link from "next/link";
 
 import {
     NavigationMenu,
@@ -16,106 +11,115 @@ import {
     NavigationMenuList,
     NavigationMenuTrigger,
     navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu"
+} from "@/components/ui/navigation-menu";
+import { Box, CircleQuestionMark, CircleUserRound } from "lucide-react";
 
-const user:boolean = false;
+const user = false;
 
 export function NavigationMenuItems() {
     return (
         <NavigationMenu className="hidden md:flex">
             <NavigationMenuList>
-
                 {/* Home */}
                 <NavigationMenuItem>
                     <NavigationMenuLink
-
                         className={navigationMenuTriggerStyle()}
-                    >
-                        <Link href="/">Home</Link>
-                    </NavigationMenuLink>
+                        render={<Link href="/">Home</Link>}
+                    />
                 </NavigationMenuItem>
 
                 {/* Property */}
                 <NavigationMenuItem>
                     <NavigationMenuLink
-
                         className={navigationMenuTriggerStyle()}
-                    >
-                        <Link href="/properties">Property</Link>
-                    </NavigationMenuLink>
+                        render={<Link href="/properties">Property</Link>}
+                    />
                 </NavigationMenuItem>
 
                 {/* Blog */}
                 <NavigationMenuItem>
                     <NavigationMenuLink
-
                         className={navigationMenuTriggerStyle()}
-                    >
-                        <Link href="/blog">Blog</Link>
-                    </NavigationMenuLink>
+                        render={<Link href="/blog">Blog</Link>}
+                    />
                 </NavigationMenuItem>
 
-                {/* About Dropdown */}
+                {/* About */}
                 <NavigationMenuItem>
                     <NavigationMenuTrigger>About</NavigationMenuTrigger>
 
                     <NavigationMenuContent>
-                        <ul className="grid w-56 gap-1 p-2">
-                            <ListItem href="/about" title="About Us">
-                                Learn more about Homez.
-                            </ListItem>
-
-                            <ListItem href="/contact" title="Contact">
-                                Get in touch with our team.
-                            </ListItem>
-
-                            <ListItem href="/faq" title="FAQ">
-                                Frequently asked questions.
-                            </ListItem>
+                        <ul className="grid w-[200px]">
+                            <li>
+                                <NavigationMenuLink
+                                    render={<Link href="about-us"
+                                        className="flex-row items-center gap-2">
+                                        <Box />About Us</Link>} />
+                                <NavigationMenuLink
+                                    render={<Link href="contact-us"
+                                        className="flex-row items-center gap-2">
+                                        <CircleUserRound />Contact Us</Link>} />
+                                <NavigationMenuLink
+                                    render={<Link href="FAQ"
+                                        className="flex-row items-center gap-2">
+                                        <CircleQuestionMark />FAQ</Link>} />
+                            </li>
                         </ul>
                     </NavigationMenuContent>
+
                 </NavigationMenuItem>
 
                 {/* Profile */}
-                {user &&
+                {user && (
                     <NavigationMenuItem>
                         <NavigationMenuLink
-
                             className={navigationMenuTriggerStyle()}
-                        >
-                            <Link href="/profile">Profile</Link>
-                        </NavigationMenuLink>
+                            render={<Link href="/profile">Profile</Link>}
+                        />
                     </NavigationMenuItem>
-                }
+                )}
 
                 {/* Dashboard */}
-                {user &&
+                {user && (
                     <NavigationMenuItem>
                         <NavigationMenuLink
-                            className={navigationMenuTriggerStyle()}>
-                            <Link href="/dashboard">Dashboard</Link>
-                        </NavigationMenuLink>
+                            className={navigationMenuTriggerStyle()}
+                            render={<Link href="/dashboard">Dashboard</Link>}
+                        />
                     </NavigationMenuItem>
-                }
-
-
+                )}
             </NavigationMenuList>
         </NavigationMenu>
     );
 }
+
+type ListItemProps = React.ComponentPropsWithoutRef<"li"> & {
+    title: string;
+    href: string;
+    children: React.ReactNode;
+};
 
 function ListItem({
     title,
     children,
     href,
     ...props
-}: React.ComponentPropsWithoutRef<"li"> & { href: string }) {
+}: ListItemProps) {
     return (
         <li {...props}>
-            <NavigationMenuLink render={<Link href={href}><div className="flex flex-col gap-1 text-sm">
-                <div className="leading-none font-medium">{title}</div>
-                <div className="line-clamp-2 text-muted-foreground">{children}</div>
-            </div></Link>} />
+            <NavigationMenuLink
+                render={
+                    <Link
+                        href={href}
+                        className="block rounded-md p-3 transition-colors hover:bg-accent"
+                    >
+                        <div className="text-sm font-medium">{title}</div>
+                        <p className="mt-1 line-clamp-2 text-sm text-muted-foreground">
+                            {children}
+                        </p>
+                    </Link>
+                }
+            />
         </li>
-    )
+    );
 }
