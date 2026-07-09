@@ -18,12 +18,12 @@ import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { LoaderCircle } from "lucide-react";
-import { RoleSelect } from "@/components/shared/RoleSelection";
+import { Role, RoleSelect } from "@/components/shared/RoleSelection";
 
 const SignUpPage = () => {
 
     const router = useRouter()
-    type Role = "seeker" | "recruiter";
+
 
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -31,7 +31,7 @@ const SignUpPage = () => {
     const [name, setName] = useState<string>("");
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
-    const [role, setRole] = useState<Role>("seeker");
+    const [role, setRole] = useState<Role>("seller");
 
     const handleSignup = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -40,16 +40,13 @@ const SignUpPage = () => {
     };
 
     return (
-        <div className="flex min-h-screen items-center justify-center px-4 bg-white bg-[radial-gradient(#d4d4d8_1px,transparent_1px)] [bg-size:24px_24px]">
+        <div className="flex min-h-screen items-center justify-center px-4 bg-white bg-[radial-gradient(#d4d4d8_1px,transparent_1px)] bg-size-[24px_24px]">
 
             <Card className="w-full max-w-md border-none shadow-xl">
-
                 <CardHeader className="space-y-3 text-center">
-
                     <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl bg-blue-600 text-xl font-bold text-white">
                         N
                     </div>
-
 
                     <CardTitle className="text-2xl font-bold">
                         Create an Account
@@ -57,7 +54,7 @@ const SignUpPage = () => {
 
 
                     <CardDescription>
-                        signup to continue your journey with NewJobex
+                        signup to continue your journey with Homez
                     </CardDescription>
                 </CardHeader>
 
@@ -72,6 +69,7 @@ const SignUpPage = () => {
 
                             <Input
                                 name="name"
+                                id="name"
                                 required
                                 type="text"
                                 placeholder="John Doe"
@@ -86,6 +84,7 @@ const SignUpPage = () => {
                             </Label>
 
                             <Input
+                                id="email"
                                 name="email"
                                 required
                                 type="email"
@@ -113,6 +112,7 @@ const SignUpPage = () => {
                             <div className="space-y-2">
                                 <div className="relative">
                                     <Input
+                                        id="password"
                                         name="password"
                                         type={showPassword ? "text" : "password"}
                                         placeholder="Enter your password"
