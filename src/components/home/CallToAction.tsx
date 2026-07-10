@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 
 const CallToAction = () => {
     return (
-        <section className="py-20">
+        <section id="contact" className="py-20">
             <div className="mx-auto max-w-7xl px-4">
 
                 <div className="grid gap-10 rounded-3xl border bg-white p-8 shadow-lg lg:grid-cols-2 lg:p-12">

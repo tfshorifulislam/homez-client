@@ -47,7 +47,7 @@ const faqs: FAQ[] = [
 
 const FAQ = () => {
   return (
-    <section className="py-20">
+    <section id="faq" className="py-20">
       <div className="mx-auto max-w-4xl px-4">
         <div className="mb-12 text-center">
           <p className="font-semibold uppercase tracking-[0.25em] text-blue-600">

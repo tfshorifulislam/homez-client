@@ -74,7 +74,7 @@ const Footer = () => {
 
                             <li>
                                 <Link
-                                    href="/contact-us"
+                                    href="#contact"
                                     className="transition hover:text-blue-400"
                                 >
                                     Contact
@@ -83,7 +83,7 @@ const Footer = () => {
 
                             <li>
                                 <Link
-                                    href="/faq"
+                                    href="#faq"
                                     className="transition hover:text-blue-400"
                                 >
                                     FAQ
