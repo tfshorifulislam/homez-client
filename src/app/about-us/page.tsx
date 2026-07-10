@@ -9,6 +9,7 @@ import {
     BadgeCheck,
 } from "lucide-react";
 import Image from "next/image";
+import { motion } from "framer-motion";
 
 
 const journey = [
@@ -130,31 +131,63 @@ const AboutUsPage = () => {
     return (
         <main className="bg-white">
             {/* Hero */}
-            <section className="border-b bg-gradient-to-br from-blue-50 via-white to-slate-100">
+            <motion.section
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.6 }}
+                className="border-b bg-gradient-to-br from-blue-50 via-white to-slate-100"
+            >
                 <div className="mx-auto max-w-7xl px-4 py-20">
                     <div className="mx-auto max-w-3xl text-center">
-                        <span className="rounded-full bg-blue-100 px-4 py-1 text-sm font-medium text-blue-600">
+
+                        <motion.span
+                            initial={{ opacity: 0, y: -20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.5 }}
+                            className="rounded-full bg-blue-100 px-4 py-1 text-sm font-medium text-blue-600"
+                        >
                             About Our Company
-                        </span>
+                        </motion.span>
 
-                        <h1 className="mt-6 text-4xl font-bold tracking-tight md:text-6xl">
-                            Helping People Find Their
-                            <span className="text-blue-600"> Perfect Home</span>
-                        </h1>
+                        <motion.h1
+                            initial={{ opacity: 0, y: 40 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.2, duration: 0.7 }}
+                            className="mt-6 text-4xl font-bold tracking-tight md:text-6xl"
+                        >
+                            Helping People Find Their{" "}
+                            <span className="text-blue-600">Perfect Home</span>
+                        </motion.h1>
 
-                        <p className="mt-6 text-lg leading-8 text-gray-600">
+                        <motion.p
+                            initial={{ opacity: 0, y: 30 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.4, duration: 0.7 }}
+                            className="mt-6 text-lg leading-8 text-gray-600"
+                        >
                             We make buying, selling, and renting properties simple, secure,
                             and transparent. Our mission is to connect people with homes they
                             truly love through trusted listings and exceptional service.
-                        </p>
+                        </motion.p>
+
                     </div>
                 </div>
-            </section>
+            </motion.section>
 
             {/* Story */}
             <section className="mx-auto max-w-7xl px-4 py-20">
                 <div className="grid items-center gap-14 lg:grid-cols-2">
-                    <div>
+
+                    {/* Left */}
+                    <motion.div
+                        initial={{ opacity: 0, x: -80 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true, amount: 0.3 }}
+                        transition={{
+                            duration: 0.7,
+                            ease: "easeOut",
+                        }}
+                    >
                         <div className="inline-flex rounded-xl bg-blue-100 p-3 text-blue-600">
                             <Building2 size={32} />
                         </div>
@@ -174,11 +207,29 @@ const AboutUsPage = () => {
                             We believe that every customer deserves transparency, reliability,
                             and professional support throughout their real estate journey.
                         </p>
-                    </div>
+                    </motion.div>
 
-                    <div className="rounded-3xl border bg-slate-50 p-8 shadow-sm">
+                    {/* Right */}
+                    <motion.div
+                        initial={{ opacity: 0, x: 80, scale: 0.95 }}
+                        whileInView={{ opacity: 1, x: 0, scale: 1 }}
+                        viewport={{ once: true, amount: 0.3 }}
+                        transition={{
+                            duration: 0.8,
+                            delay: 0.2,
+                            ease: "easeOut",
+                        }}
+                        className="rounded-3xl border bg-slate-50 p-8 shadow-sm"
+                    >
                         <div className="space-y-6">
-                            <div className="flex items-start gap-4">
+
+                            <motion.div
+                                initial={{ opacity: 0, y: 25 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ delay: 0.35 }}
+                                className="flex items-start gap-4"
+                            >
                                 <Handshake className="text-blue-600" />
                                 <div>
                                     <h3 className="font-semibold">Our Mission</h3>
@@ -187,9 +238,15 @@ const AboutUsPage = () => {
                                         for everyone.
                                     </p>
                                 </div>
-                            </div>
+                            </motion.div>
 
-                            <div className="flex items-start gap-4">
+                            <motion.div
+                                initial={{ opacity: 0, y: 25 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ delay: 0.5 }}
+                                className="flex items-start gap-4"
+                            >
                                 <BadgeCheck className="text-blue-600" />
                                 <div>
                                     <h3 className="font-semibold">Our Vision</h3>
@@ -198,9 +255,15 @@ const AboutUsPage = () => {
                                         renting, and selling properties worldwide.
                                     </p>
                                 </div>
-                            </div>
+                            </motion.div>
 
-                            <div className="flex items-start gap-4">
+                            <motion.div
+                                initial={{ opacity: 0, y: 25 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ delay: 0.65 }}
+                                className="flex items-start gap-4"
+                            >
                                 <ShieldCheck className="text-blue-600" />
                                 <div>
                                     <h3 className="font-semibold">Our Promise</h3>
@@ -209,9 +272,11 @@ const AboutUsPage = () => {
                                         experience from start to finish.
                                     </p>
                                 </div>
-                            </div>
+                            </motion.div>
+
                         </div>
-                    </div>
+                    </motion.div>
+
                 </div>
             </section>
 
