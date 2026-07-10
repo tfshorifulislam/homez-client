@@ -9,10 +9,10 @@ import {
 } from "lucide-react";
 
 type Highlight = {
-    icon: LucideIcon,
-    title: string,
-    subtitle: string
-}
+  icon: LucideIcon;
+  title: string;
+  subtitle: string;
+};
 
 const highlights: Highlight[] = [
   {
@@ -39,30 +39,32 @@ const highlights: Highlight[] = [
 
 const Highlights = () => {
   return (
-    <section className="bg-blue-600 py-20">
-      <div className="mx-auto grid max-w-7xl grid-cols-2 gap-6 px-4 lg:grid-cols-4">
-        {highlights.map((item) => {
-          const Icon = item.icon;
+    <section className="bg-blue-600 py-14 sm:py-16 lg:py-20">
+      <div className="mx-auto max-w-7xl px-4">
+        <div className="grid grid-cols-2 gap-4 lg:grid-cols-4 lg:gap-6">
+          {highlights.map((item) => {
+            const Icon = item.icon;
 
-          return (
-            <div
-              key={item.subtitle}
-              className="rounded-2xl bg-white/10 p-8 text-center backdrop-blur transition hover:bg-white/20"
-            >
-              <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full bg-white text-blue-600">
-                <Icon size={32} />
+            return (
+              <div
+                key={item.subtitle}
+                className="group rounded-2xl border border-white/10 bg-white/10 p-5 text-center backdrop-blur-md transition-all duration-300 hover:-translate-y-2 hover:bg-white/20"
+              >
+                <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-full bg-white transition-all duration-300 group-hover:scale-110">
+                  <Icon className="h-7 w-7 text-blue-600" />
+                </div>
+
+                <h3 className="text-2xl font-bold text-white sm:text-3xl lg:text-4xl">
+                  {item.title}
+                </h3>
+
+                <p className="mt-2 text-sm text-blue-100 sm:text-base">
+                  {item.subtitle}
+                </p>
               </div>
-
-              <h3 className="text-4xl font-bold text-white">
-                {item.title}
-              </h3>
-
-              <p className="mt-3 text-blue-100">
-                {item.subtitle}
-              </p>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
     </section>
   );
