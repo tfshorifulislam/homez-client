@@ -1,10 +1,12 @@
 import Banner from '@/components/shared/Banner';
+import TrustedCompanies from '@/components/shared/TrustedCompanies';
 import React from 'react';
 
 const HomePage = () => {
     return (
         <div>
-            <Banner /> 
+            <Banner />
+            <TrustedCompanies />
         </div>
     );
 };
