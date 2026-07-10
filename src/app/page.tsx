@@ -4,6 +4,7 @@ import Categories from '@/components/home/Categories';
 import Featured from '@/components/home/Fetured';
 import Highlights from '@/components/home/Highlights';
 import Services from '@/components/home/Services';
+import Statistics from '@/components/home/Statistics';
 import TrustedCompanies from '@/components/home/TrustedCompanies';
 
 const HomePage = () => {
@@ -15,6 +16,7 @@ const HomePage = () => {
             <Services />
             <Categories />
             <Highlights />
+            <Statistics />
         </div>
     );
 };
