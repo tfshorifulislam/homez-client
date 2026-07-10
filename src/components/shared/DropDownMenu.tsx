@@ -24,7 +24,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify"
-import { signOut } from "@/lib/auth-client"
+import { signOut, useSession } from "@/lib/auth-client"
 
 export function DropdownMenuAvatar() {
 
@@ -42,21 +42,35 @@ export function DropdownMenuAvatar() {
         }
     };
 
+    const { data: session }: ReturnType<typeof useSession> = useSession();
+    const user = session?.user
+
+    const defaultImg: string = 'https://github.com/shadcn.png'
+
     return (
         <DropdownMenu>
-            <DropdownMenuTrigger render={<Button variant="ghost" size="icon" className="rounded-full"><Avatar>
-                <AvatarImage src="https://github.com/shadcn.png" alt="shadcn" />
-                <AvatarFallback>LR</AvatarFallback>
-            </Avatar></Button>} />
+            <DropdownMenuTrigger
+                render={<Button
+                    variant="ghost" size="icon" className="rounded-full">
+                    <Avatar>
+                        <AvatarImage
+                            src={user?.image || defaultImg}
+                            alt={user?.name || "User"}
+                        />
+                        <AvatarFallback>
+                            {user?.name?.charAt(0).toUpperCase() || "U"}
+                        </AvatarFallback>
+                    </Avatar>
+                </Button>} />
             <DropdownMenuContent align="end">
                 <DropdownMenuGroup>
                     <DropdownMenuItem>
-                        <UserRound />
-                        Profile
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
                         <LayoutDashboard />
                         Dashboard
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                        <UserRound />
+                        Profile
                     </DropdownMenuItem>
                     <DropdownMenuItem>
                         <BellIcon />

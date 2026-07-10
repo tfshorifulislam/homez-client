@@ -7,9 +7,8 @@ import { NavigationMenuItems } from "../shadCn/NavigationMenuItem";
 import { DropdownMenuAvatar } from "./DropDownMenu";
 
 const Navbar = () => {
-  const { data: session } = useSession();
+  const { data: session }: ReturnType<typeof useSession> = useSession();
   const user = session?.user;
-  console.log(user)
 
   return (
     <header className="sticky top-0 z-50 border-b bg-white/80 backdrop-blur-md">
