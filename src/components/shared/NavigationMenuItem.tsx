@@ -13,10 +13,14 @@ import {
     navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import { Box, CircleQuestionMark, CircleUserRound } from "lucide-react";
+import { useSession } from "@/lib/auth-client";
 
-const user = false;
 
 export function NavigationMenuItems() {
+
+    const { data: session }: ReturnType<typeof useSession> = useSession()
+    const user = session?.user;
+
     return (
         <NavigationMenu className="hidden md:flex">
             <NavigationMenuList>

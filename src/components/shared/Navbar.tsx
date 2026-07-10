@@ -3,7 +3,7 @@
 import Logo from "./Logo";
 import LoginSignupBtn from "./LoginSignupBtn";
 import { useSession } from "@/lib/auth-client";
-import { NavigationMenuItems } from "../shadCn/NavigationMenuItem";
+import { NavigationMenuItems } from "./NavigationMenuItem";
 import { DropdownMenuAvatar } from "./DropDownMenu";
 
 const Navbar = () => {

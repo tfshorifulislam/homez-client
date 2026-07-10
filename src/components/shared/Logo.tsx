@@ -13,12 +13,12 @@ const Logo = () => {
                 <Home className="h-6 w-6" strokeWidth={2.2} />
             </div>
 
-            <div className="hidden md:flex flex-col leading-none">
+            <div className="flex flex-col leading-none">
                 <h1 className="text-2xl font-extrabold tracking-tight text-slate-900">
                     Home<span className="text-blue-600">z</span>
                 </h1>
 
-                <p className=" text-xs font-medium uppercase tracking-[0.22em] text-slate-500">
+                <p className="text-xs font-medium uppercase tracking-[0.22em] text-slate-500">
                     Real Estate
                 </p>
             </div>

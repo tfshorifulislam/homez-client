@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/shared/Navbar";
+import MobileNavigation from "@/components/shared/MobileNavigation";
 
 
 const inter = Inter({
@@ -29,6 +30,7 @@ export default function RootLayout({
         <main>
           {children}
         </main>
+        <MobileNavigation />
       </body>
     </html>
   );
