@@ -27,6 +27,7 @@ const LoginPage = () => {
 
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [loginError, setLoginError] = useState<string>("");
 
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
@@ -34,18 +35,29 @@ const LoginPage = () => {
     const handleSignIn = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        const { error } = await authClient.signIn.email({
-            email,
-            password,
-        })
+        try {
+            setIsLoading(true);
 
-        if (error) {
-            return toast.error(error.message);
+            const { error } = await authClient.signIn.email({
+                email,
+                password,
+            });
+
+            if (error) {
+                setLoginError("Invalid email or password.");
+                return;
+            }
+
+            toast.success("Welcome Back!");
+            router.push("/");
+        } catch (error) {
+            console.error(error);
+            toast.error("Something went wrong. Please try again.");
+        } finally {
+            setIsLoading(false);
         }
-
-        toast.success("Welcome Back!");
-        router.push("/");
     };
+
 
     return (
         <div className="flex min-h-screen items-center justify-center px-4 bg-white bg-[radial-gradient(#d4d4d8_1px,transparent_1px)] bg-size-[24px_24px]">
@@ -129,6 +141,12 @@ const LoginPage = () => {
                                 </p>
                             </div>
 
+                            {loginError && (
+                                <p className="mt-2 text-sm text-red-500">
+                                    {loginError}
+                                </p>
+                            )}
+
                         </div>
 
                         {/* card footer */}
@@ -137,7 +155,7 @@ const LoginPage = () => {
                             <Button
                                 type="submit"
                                 disabled={isLoading}
-                                className="h-11 w-full rounded-xl bg-blue-600 hover:bg-[#5522ee]"
+                                className="h-11 w-full rounded-xl bg-blue-600 hover:bg-blue-500"
                             >
                                 {isLoading ? (
                                     <>
