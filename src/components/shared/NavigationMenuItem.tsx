@@ -53,18 +53,18 @@ export function NavigationMenuItems() {
                     <NavigationMenuTrigger>About</NavigationMenuTrigger>
 
                     <NavigationMenuContent>
-                        <ul className="grid w-[200px]">
+                        <ul className="grid w-50">
                             <li>
                                 <NavigationMenuLink
                                     render={<Link href="about-us"
                                         className="flex-row items-center gap-2">
                                         <Box />About Us</Link>} />
                                 <NavigationMenuLink
-                                    render={<Link href="contact-us"
+                                    render={<Link href="/#contact"
                                         className="flex-row items-center gap-2">
                                         <CircleUserRound />Contact Us</Link>} />
                                 <NavigationMenuLink
-                                    render={<Link href="FAQ"
+                                    render={<Link href="/#faq"
                                         className="flex-row items-center gap-2">
                                         <CircleQuestionMark />FAQ</Link>} />
                             </li>
