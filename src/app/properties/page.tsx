@@ -1,12 +1,13 @@
 import PropertyHeader from '@/components/shared/PropertyHeader';
 import PropertyItem from '@/components/shared/PropertyItem';
-import React from 'react';
 
-const PropertyPage = () => {
+type Props = {searchParams: Promise<{page?: string;}>};
+
+const PropertyPage = async ({ searchParams }: Props) => {
     return (
         <div>
             <PropertyHeader />
-            <PropertyItem/>
+            <PropertyItem searchParams={searchParams} />
         </div>
     );
 };

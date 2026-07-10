@@ -23,8 +23,15 @@ export interface Property {
     isActive: string;
 }
 
+export interface PropertyResponse {
+    data: Property[];
+    total: number;
+    currentPage: number;
+    totalPages: number;
+}
 
-export const getAllProperty = async (isActive: "active" | "inactive" ): Promise<Property[]> => {
-    const res = await fetch(`${baseUrl}/api/all-properties?isActive=${isActive}`);
+export const getAllProperty = async (isActive: "active" | "inactive" = "active", page = 1, limit = 8)
+    : Promise<PropertyResponse> => {
+    const res = await fetch(`${baseUrl}/api/all-properties?isActive=${isActive}&page=${page}&limit=${limit}`);
     return res.json();
 };

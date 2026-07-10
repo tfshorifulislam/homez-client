@@ -1,10 +1,19 @@
 import { getAllProperty } from "@/lib/api/property";
-import Image from "next/image";
-import Link from "next/link";
 import PropertyCard from "./PropertyCard";
 
-const PropertyItem = async () => {
-    const property = await getAllProperty("active");
+type Props = {
+    searchParams: Promise<{
+        page?: string;
+    }>;
+};
+
+
+const PropertyItem = async ({ searchParams }: Props) => {
+    const { page } = await searchParams;
+
+    const currentPage = Number(page) || 1;
+    const result = await getAllProperty("active", currentPage, 8);
+
 
     return (
         <div className="mx-auto max-w-7xl px-4 py-10">
@@ -12,7 +21,11 @@ const PropertyItem = async () => {
                 Active Properties
             </h1>
 
-            <PropertyCard property={property} />
+            <PropertyCard
+                property={result.data}
+                totalPages={result.totalPages}
+                currentPage={result.currentPage}
+            />
         </div>
     );
 };

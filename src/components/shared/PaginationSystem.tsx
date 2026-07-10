@@ -12,35 +12,28 @@ import {
 type PaginationSystemProps = {
     currentPage: number;
     totalPages: number;
-    setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
 };
 
-const PaginationSystem = ({ currentPage, totalPages, setCurrentPage, }: PaginationSystemProps) => {
+const PaginationSystem = ({
+    currentPage,
+    totalPages,
+}: PaginationSystemProps) => {
     return (
         <div className="mt-8 w-fit mx-auto">
             <Pagination>
                 <PaginationContent>
+
                     <PaginationItem>
                         <PaginationPrevious
-                            href="#"
-                            onClick={(e) => {
-                                e.preventDefault();
-                                if (currentPage > 1) {
-                                    setCurrentPage(currentPage - 1);
-                                }
-                            }}
+                            href={`?page=${Math.max(currentPage - 1, 1)}`}
                         />
                     </PaginationItem>
 
                     {Array.from({ length: totalPages }).map((_, index) => (
                         <PaginationItem key={index}>
                             <PaginationLink
-                                href="#"
+                                href={`?page=${index + 1}`}
                                 isActive={currentPage === index + 1}
-                                onClick={(e) => {
-                                    e.preventDefault();
-                                    setCurrentPage(index + 1);
-                                }}
                             >
                                 {index + 1}
                             </PaginationLink>
@@ -49,15 +42,10 @@ const PaginationSystem = ({ currentPage, totalPages, setCurrentPage, }: Paginati
 
                     <PaginationItem>
                         <PaginationNext
-                            href="#"
-                            onClick={(e) => {
-                                e.preventDefault();
-                                if (currentPage < totalPages) {
-                                    setCurrentPage(currentPage + 1);
-                                }
-                            }}
+                            href={`?page=${Math.min(currentPage + 1, totalPages)}`}
                         />
                     </PaginationItem>
+
                 </PaginationContent>
             </Pagination>
         </div>

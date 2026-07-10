@@ -3,29 +3,19 @@
 import { Property } from '@/lib/api/property';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
 import PaginationSystem from './PaginationSystem';
 
 type PropertyCardProps = {
-    property: Property[];
+  property: Property[];
+  totalPages: number;
+  currentPage: number;
 };
 
-const PropertyCard = ({ property }: PropertyCardProps) => {
-
-    const itemsPerPage = 8;
-    const [currentPage, setCurrentPage] = useState(1);
-
-    const start = (currentPage - 1) * itemsPerPage;
-    const end = start + itemsPerPage;
-
-    const currentProperty = property.slice(start, end);
-
-    const totalPages = Math.ceil(property.length / itemsPerPage);
-
+const PropertyCard = ({ property, totalPages, currentPage,}: PropertyCardProps) => {
     return (
         <div>
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
-                {currentProperty.map((item) => (
+                {property.map((item) => (
                     <div key={item._id} className="overflow-hidden rounded-xl border bg-white shadow-sm transition-all hover:shadow-lg">
                         <div className="relative h-52 w-full overflow-hidden">
                             <Image
@@ -64,7 +54,6 @@ const PropertyCard = ({ property }: PropertyCardProps) => {
             <PaginationSystem
                 currentPage={currentPage}
                 totalPages={totalPages}
-                setCurrentPage={setCurrentPage}
             />
         </div>
     );
