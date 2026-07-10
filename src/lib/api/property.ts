@@ -30,8 +30,19 @@ export interface PropertyResponse {
     totalPages: number;
 }
 
-export const getAllProperty = async (isActive: "active" | "inactive" = "active", page = 1, limit = 12)
-    : Promise<PropertyResponse> => {
-    const res = await fetch(`${baseUrl}/api/all-properties?isActive=${isActive}&page=${page}&limit=${limit}`);
+export const getAllProperty = async (
+    isActive: "active" | "inactive" = "active",
+    page = 1,
+    limit = 12,
+    featured?: boolean
+): Promise<PropertyResponse> => {
+
+    let url = `${baseUrl}/api/all-properties?isActive=${isActive}&page=${page}&limit=${limit}`;
+
+    if (featured !== undefined) {
+        url += `&featured=${featured}`;
+    }
+
+    const res = await fetch(url);
     return res.json();
 };

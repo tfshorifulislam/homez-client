@@ -1,5 +1,5 @@
-import PropertyHeader from '@/components/shared/PropertyHeader';
-import PropertyItem from '@/components/shared/PropertyItem';
+import PropertyHeader from '@/components/property/PropertyHeader';
+import PropertyItem from '@/components/property/PropertyItem';
 
 type Props = {searchParams: Promise<{page?: string;}>};
 

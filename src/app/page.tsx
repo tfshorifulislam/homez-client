@@ -1,12 +1,14 @@
-import Banner from '@/components/shared/Banner';
-import TrustedCompanies from '@/components/shared/TrustedCompanies';
-import React from 'react';
+
+import Banner from '@/components/home/Banner';
+import Featured from '@/components/home/Fetured';
+import TrustedCompanies from '@/components/home/TrustedCompanies';
 
 const HomePage = () => {
     return (
         <div>
             <Banner />
             <TrustedCompanies />
+            <Featured/>
         </div>
     );
 };

@@ -1,16 +1,10 @@
 "use client";
 
 import { useState } from "react";
-
 import SearchInput from "./SearchInput";
+import PropertyTypeFilter, { PropertyType } from "../shared/FilterInput";
+import SortInput, { SortType } from "./SortInput";
 
-import PropertyTypeFilter, {
-  PropertyType,
-} from "./FilterInput";
-
-import SortInput, {
-  SortType,
-} from "./SortInput";
 
 const PropertyHeader = () => {
   const [search, setSearch] = useState("");
