@@ -54,22 +54,22 @@ const team = [
     {
         name: "John Anderson",
         role: "Founder & CEO",
-        image: "https://randomuser.me/api/portraits/men/11.jpg",
+        image: '/1.jpg',
     },
     {
         name: "Emma Watson",
         role: "Property Consultant",
-        image: "https://randomuser.me/api/portraits/women/21.jpg",
+        image: "/4.jpg",
     },
     {
         name: "Michael Smith",
         role: "Sales Manager",
-        image: "https://randomuser.me/api/portraits/men/32.jpg",
+        image: "/2.jpg",
     },
     {
         name: "Sophia Brown",
         role: "Marketing Lead",
-        image: "https://randomuser.me/api/portraits/women/41.jpg",
+        image: "/3.jpg",
     },
 ];
 
@@ -425,7 +425,6 @@ const AboutUsPage = () => {
                         ))}
 
                     </div>
-
                 </div>
 
             </section>
