@@ -16,7 +16,7 @@ const PropertyItem = async ({ searchParams }: Props) => {
 
 
     return (
-        <div className="mx-auto max-w-7xl px-4 py-10">
+        <div className="mx-auto max-w-7xl px-4 py-10 pb-24 md:pb-10">
             <h1 className="text-lg font-medium md:text-xl mb-3">
                 Active Properties
             </h1>
