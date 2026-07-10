@@ -12,7 +12,7 @@ const PropertyItem = async ({ searchParams }: Props) => {
     const { page } = await searchParams;
 
     const currentPage = Number(page) || 1;
-    const result = await getAllProperty("active", currentPage, 8);
+    const result = await getAllProperty("active", currentPage, 12);
 
 
     return (

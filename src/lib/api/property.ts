@@ -30,7 +30,7 @@ export interface PropertyResponse {
     totalPages: number;
 }
 
-export const getAllProperty = async (isActive: "active" | "inactive" = "active", page = 1, limit = 8)
+export const getAllProperty = async (isActive: "active" | "inactive" = "active", page = 1, limit = 12)
     : Promise<PropertyResponse> => {
     const res = await fetch(`${baseUrl}/api/all-properties?isActive=${isActive}&page=${page}&limit=${limit}`);
     return res.json();

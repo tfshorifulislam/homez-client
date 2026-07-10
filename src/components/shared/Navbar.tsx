@@ -7,6 +7,7 @@ import { NavigationMenuItems } from "./NavigationMenuItem";
 import { DropdownMenuAvatar } from "./DropDownMenu";
 
 const Navbar = () => {
+
   const { data: session }: ReturnType<typeof useSession> = useSession();
   const user = session?.user;
 

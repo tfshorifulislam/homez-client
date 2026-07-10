@@ -1,6 +1,5 @@
 "use client";
 
-import * as React from "react";
 import Link from "next/link";
 
 import {
@@ -15,8 +14,9 @@ import {
 import { Box, CircleQuestionMark, CircleUserRound } from "lucide-react";
 import { useSession } from "@/lib/auth-client";
 
-
 export function NavigationMenuItems() {
+
+
 
     const { data: session }: ReturnType<typeof useSession> = useSession()
     const user = session?.user;
