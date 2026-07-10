@@ -1,6 +1,7 @@
 
 import Banner from '@/components/home/Banner';
 import Categories from '@/components/home/Categories';
+import FAQ from '@/components/home/FAQ';
 import Featured from '@/components/home/Fetured';
 import Highlights from '@/components/home/Highlights';
 import Newsletter from '@/components/home/Newsletter';
@@ -18,6 +19,7 @@ const HomePage = () => {
             <Categories />
             <Highlights />
             <Statistics />
+            <FAQ />
             <Newsletter />
         </div>
     );
