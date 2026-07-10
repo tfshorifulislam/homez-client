@@ -36,6 +36,7 @@ const PropertyHeader = () => {
           <p className="mt-2 text-muted-foreground">
             Discover apartments, villas and houses from trusted sellers.
           </p>
+          
         </div>
 
         <div className="grid items-center gap-4 lg:grid-cols-[1fr_220px_220px]">
