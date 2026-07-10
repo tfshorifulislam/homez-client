@@ -1,5 +1,6 @@
 
 import Banner from '@/components/home/Banner';
+import CallToAction from '@/components/home/CallToAction';
 import Categories from '@/components/home/Categories';
 import FAQ from '@/components/home/FAQ';
 import Featured from '@/components/home/Fetured';
@@ -21,6 +22,7 @@ const HomePage = () => {
             <Statistics />
             <FAQ />
             <Newsletter />
+            <CallToAction />
         </div>
     );
 };
