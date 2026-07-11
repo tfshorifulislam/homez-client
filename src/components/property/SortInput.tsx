@@ -12,25 +12,30 @@ import {
 
 export type SortType = "newest" | "low-high" | "high-low";
 
-interface SortInputProps {
-  value: SortType;
-  onValueChange: (value: SortType) => void;
-}
-
 const items = [
   { label: "Newest", value: "newest" },
   { label: "Price: Low to High", value: "low-high" },
   { label: "Price: High to Low", value: "high-low" },
 ];
 
-const SortInput = ({ value, onValueChange }: SortInputProps) => {
+interface SortInputProps {
+  value: SortType;
+  onValueChange: (value: SortType) => void;
+}
+
+const SortInput = ({
+  value,
+  onValueChange,
+}: SortInputProps) => {
   return (
     <Select
       items={items}
       value={value}
-      onValueChange={(value) => onValueChange(value as SortType)}
+      onValueChange={(value) =>
+        onValueChange(value as SortType)
+      }
     >
-      <SelectTrigger className="w-full h-11">
+      <SelectTrigger className="h-11 w-full">
         <SelectValue />
       </SelectTrigger>
 

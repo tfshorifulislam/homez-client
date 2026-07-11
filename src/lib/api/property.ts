@@ -31,18 +31,41 @@ export interface PropertyResponse {
 }
 
 export const getAllProperty = async (
-    isActive: "active" | "inactive" = "active",
-    page = 1,
-    limit = 12,
-    featured?: boolean
+  isActive: "active" | "inactive" = "active",
+  page = 1,
+  limit = 12,
+  featured?: boolean,
+  search?: string,
+  type?: string,
+  sort?: "newest" | "low-high" | "high-low"
 ): Promise<PropertyResponse> => {
+  const params = new URLSearchParams({
+    isActive,
+    page: page.toString(),
+    limit: limit.toString(),
+  });
 
-    let url = `${baseUrl}/api/all-properties?isActive=${isActive}&page=${page}&limit=${limit}`;
+  if (featured !== undefined) {
+    params.append("featured", String(featured));
+  }
 
-    if (featured !== undefined) {
-        url += `&featured=${featured}`;
-    }
+  if (search?.trim()) {
+    params.append("search", search.trim());
+  }
 
-    const res = await fetch(url);
-    return res.json();
+  if (type && type !== "all") {
+    params.append("type", type);
+  }
+
+  if (sort && sort !== "newest") {
+    params.append("sort", sort);
+  }
+
+  const res = await fetch(`${baseUrl}/api/all-properties?${params.toString()}`);
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch properties");
+  }
+
+  return res.json();
 };

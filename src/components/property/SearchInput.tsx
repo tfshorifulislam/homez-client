@@ -1,19 +1,21 @@
+"use client";
+
 import { Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Field } from "../ui/field";
 
-interface PropertySearchProps {
+interface SearchInputProps {
   value: string;
   onChange: (value: string) => void;
-  onSearch?: () => void;
+  onSearch: () => void;
 }
 
 const SearchInput = ({
   value,
   onChange,
   onSearch,
-}: PropertySearchProps) => {
+}: SearchInputProps) => {
   return (
     <Field orientation="horizontal" className="w-full">
       <Input
@@ -25,7 +27,7 @@ const SearchInput = ({
       />
 
       <Button
-        className="h-11 bg-blue-600 hover:bg-blue-500 cursor-pointer"
+        className="h-11 cursor-pointer bg-blue-600 hover:bg-blue-500"
         onClick={onSearch}
       >
         <Search className="mr-2 h-4 w-4" />
