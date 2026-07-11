@@ -12,7 +12,7 @@ import { Property } from "@/lib/api/property";
 interface Props {
     properties: Property[];
 }
-
+ 
 
 const FeaturedCarousel = ({
     properties

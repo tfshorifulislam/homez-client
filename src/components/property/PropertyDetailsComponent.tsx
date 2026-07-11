@@ -197,16 +197,22 @@ const PropertyDetailsComponent = ({ property, relatedProperties }: Props) => {
 
                         {/* Buttons */}
 
-                        <div className="mt-8 flex gap-4">
-                            <Button className="flex-1">
+                        <div className="mt-8 flex flex-col gap-4 sm:flex-row">
+
+                            <Button
+                                className="flex-1 rounded-xl bg-blue-600 py-6 text-base font-semibold shadow-md transition hover:bg-blue-700"
+                            >
                                 Contact Agent
                             </Button>
+
+
                             <Button
                                 variant="outline"
-                                className="flex-1"
+                                className="flex-1 rounded-xl border-2 border-blue-600 py-6 text-base font-semibold text-blue-600 transition hover:bg-blue-600 hover:text-white"
                             >
                                 Book Visit
                             </Button>
+
                         </div>
                     </div>
                 </div>
