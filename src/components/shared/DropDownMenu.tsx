@@ -184,7 +184,7 @@ export function DropdownMenuAvatar() {
                                         <span>{item.title}</span>
                                     </DropdownMenuItem>
                                 )
-                            })}
+                            })}  
                         </DropdownMenuGroup>
 
                         <DropdownMenuSeparator className="my-2 md:hidden" />

@@ -32,7 +32,7 @@ const menus: Record<Role, MenuItem[]> = {
         },
         {
             title: "Profile",
-            href: "/dashboard/profile",
+            href: "/profile",
             icon: User,
         },
         {
@@ -70,7 +70,7 @@ const menus: Record<Role, MenuItem[]> = {
         },
         {
             title: "Profile",
-            href: "/dashboard/profile",
+            href: "/profile",
             icon: User,
         },
         {
