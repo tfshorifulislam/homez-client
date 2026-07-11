@@ -11,7 +11,7 @@ type PropertyCardProps = {
   currentPage: number;
 };
 
-const PropertyCard = ({ property, totalPages, currentPage,}: PropertyCardProps) => {
+const PropertyCard = ({ property, totalPages, currentPage}: PropertyCardProps) => {
     return (
         <div>
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
