@@ -18,6 +18,7 @@ import OtherPropertyCard from "./OtherPropertyCard";
 
 interface Props {
     property: Property;
+    relatedProperties: Property[];
 }
 
 
