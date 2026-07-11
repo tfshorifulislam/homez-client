@@ -5,6 +5,9 @@ import useEmblaCarousel from "embla-carousel-react";
 import { ChevronLeft, ChevronRight, ChevronDown, } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion, type Variants } from "framer-motion";
+import Link from "next/link";
+import { useEffect } from "react";
+
 
 const slides = [
     "/home 6.jpg",
@@ -27,6 +30,8 @@ const containerVariants = {
     },
 };
 
+
+
 const itemVariants: Variants = {
     hidden: {
         opacity: 0,
@@ -45,10 +50,23 @@ const itemVariants: Variants = {
 
 
 const Banner = () => {
+
+
+
     const [emblaRef, emblaApi] = useEmblaCarousel({
         loop: true,
         align: "start",
     });
+
+    useEffect(() => {
+        if (!emblaApi) return;
+
+        const interval = setInterval(() => {
+            emblaApi.scrollNext();
+        }, 4000);
+
+        return () => clearInterval(interval);
+    }, [emblaApi]);
 
     return (
         <section className="relative h-[75vh] w-full overflow-hidden">
@@ -120,12 +138,15 @@ const Banner = () => {
                             variants={itemVariants}
                             className="mt-8 flex flex-col gap-4 sm:flex-row sm:justify-center md:justify-start"
                         >
-                            <Button
-                                size="lg"
-                                className="h-12 rounded-xl bg-blue-600 px-8 text-base font-semibold shadow-xl transition-all hover:bg-blue-700 hover:shadow-blue-600/20"
-                            >
-                                Explore Properties
-                            </Button>
+                            <Link href={'/properties'}>
+                                <Button
+                                    size="lg"
+                                    className="h-12 rounded-xl bg-blue-600 px-8 text-base font-semibold shadow-xl transition-all hover:bg-blue-700 hover:shadow-blue-600/20 cursor-pointer"
+                                >
+                                    Explore Properties
+                                </Button>
+                            </Link>
+
 
                             <Button
                                 size="lg"
@@ -174,7 +195,10 @@ const Banner = () => {
 
             {/* Previous Button */}
             <button
-                onClick={() => emblaApi?.scrollPrev()}
+                onClick={() => {
+                    emblaApi?.scrollPrev();
+                   
+                }}
                 className="absolute left-6 top-1/2 z-20 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/20 text-white backdrop-blur transition hover:bg-white hover:text-black focus:outline-none"
                 aria-label="Previous slide"
             >
@@ -183,7 +207,10 @@ const Banner = () => {
 
             {/* Next Button */}
             <button
-                onClick={() => emblaApi?.scrollNext()}
+                onClick={() => {
+                    emblaApi?.scrollNext();
+                    
+                }}
                 className="absolute right-6 top-1/2 z-20 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/20 text-white backdrop-blur transition hover:bg-white hover:text-black focus:outline-none"
                 aria-label="Next slide"
             >
