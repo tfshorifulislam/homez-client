@@ -3,6 +3,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Calendar, Clock3, ArrowRight } from "lucide-react";
+import { motion } from "framer-motion";
+
 
 type Blog = {
     id: number;
@@ -83,80 +85,186 @@ const blogs: Blog[] = [
     },
 ];
 
+const containerVariants = {
+    hidden: {
+        opacity: 0,
+    },
+    visible: {
+        opacity: 1,
+        transition: {
+            staggerChildren: 0.15,
+        },
+    },
+};
+
+
+const cardVariants = {
+    hidden: {
+        opacity: 0,
+        y: 50,
+    },
+    visible: {
+        opacity: 1,
+        y: 0,
+        transition: {
+            duration: 0.6,
+            ease: "easeOut",
+        },
+    },
+};
+
 const BlogPage = () => {
     return (
         <>
             {/* Hero */}
             <section className="border-b bg-linear-to-br from-blue-50 via-white to-slate-100">
                 <div className="mx-auto max-w-7xl px-4 py-24 text-center">
-                    <span className="rounded-full bg-blue-100 px-4 py-2 text-sm font-medium text-blue-600">
+
+                    {/* Badge */}
+                    <motion.span
+                        initial={{ opacity: 0, y: -20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5 }}
+                        className="inline-block rounded-full bg-blue-100 px-4 py-2 text-sm font-medium text-blue-600"
+                    >
                         Real Estate Insights
-                    </span>
+                    </motion.span>
 
-                    <h1 className="mt-6 text-5xl font-bold">
-                        Our <span className="text-blue-600">Latest Blogs</span>
-                    </h1>
+                    {/* Heading */}
+                    <motion.h1
+                        initial={{ opacity: 0, y: 30 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{
+                            duration: 0.6,
+                            delay: 0.2
+                        }}
+                        className="mt-6 text-5xl font-bold"
+                    >
+                        Our{" "}
+                        <span className="text-blue-600">
+                            Latest Blogs
+                        </span>
+                    </motion.h1>
 
-                    <p className="mx-auto mt-6 max-w-2xl text-lg text-gray-600">
+                    {/* Description */}
+                    <motion.p
+                        initial={{ opacity: 0, y: 30 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{
+                            duration: 0.6,
+                            delay: 0.4
+                        }}
+                        className="mx-auto mt-6 max-w-2xl text-lg text-gray-600"
+                    >
                         Discover expert real estate tips, market trends, investment
                         strategies, and home-buying guides from industry professionals.
-                    </p>
+                    </motion.p>
                 </div>
             </section>
 
             {/* Blogs */}
             <section className="mx-auto max-w-7xl px-4 py-20">
-                <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+
+                <motion.div
+                    variants={containerVariants}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{
+                        once: true,
+                        amount: 0.2,
+                    }}
+                    className="grid gap-8 md:grid-cols-2 lg:grid-cols-3"
+                >
+
                     {blogs.map((blog) => (
-                        <article
+
+                        <motion.article
                             key={blog.id}
-                            className="overflow-hidden rounded-2xl border bg-white transition duration-300 hover:-translate-y-2 hover:shadow-xl"
+                            variants={cardVariants}
+                            whileHover={{
+                                y: -8,
+                            }}
+                            className="overflow-hidden rounded-2xl border bg-white shadow-sm transition"
                         >
+
+
                             <div className="relative h-60 overflow-hidden">
+
                                 <Image
                                     src={blog.image}
                                     alt={blog.title}
                                     fill
                                     className="object-cover transition duration-500 hover:scale-110"
                                 />
+
                             </div>
 
+
+
+
                             <div className="p-6">
+
+
                                 <span className="rounded-full bg-blue-100 px-3 py-1 text-xs font-semibold text-blue-600">
                                     {blog.category}
                                 </span>
+
+
 
                                 <h2 className="mt-4 text-xl font-bold leading-8">
                                     {blog.title}
                                 </h2>
 
+
+
+
                                 <div className="mt-4 flex items-center gap-5 text-sm text-gray-500">
+
+
                                     <div className="flex items-center gap-1">
                                         <Calendar size={16} />
                                         {blog.date}
                                     </div>
 
+
+
                                     <div className="flex items-center gap-1">
                                         <Clock3 size={16} />
                                         {blog.read}
                                     </div>
+
+
                                 </div>
+
+
+
 
                                 <p className="mt-4 text-gray-600">
                                     {blog.description}
                                 </p>
 
+
+
+
                                 <Link
                                     href="#"
-                                    className="mt-6 inline-flex items-center gap-2 font-semibold text-blue-600 transition hover:gap-3"
+                                    className="mt-6 inline-flex items-center gap-2 font-semibold text-blue-600 transition-all hover:gap-3"
                                 >
                                     Read More
                                     <ArrowRight size={18} />
                                 </Link>
+
+
                             </div>
-                        </article>
+
+
+                        </motion.article>
+
                     ))}
-                </div>
+
+
+                </motion.div>
+
             </section>
 
             {/* Newsletter */}
