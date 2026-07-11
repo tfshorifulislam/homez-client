@@ -113,7 +113,7 @@ const SideBar = () => {
     const role = (session?.user?.role as Role) ?? "buyer";
 
     return (
-        <aside className="sticky top-0 hidden h-screen w-62 flex-col border-r bg-white md:flex">
+        <aside className="sticky top-0 hidden h-screen w-60 flex-col border-r bg-white md:flex">
             {/* Header */}
             <div className="border-b px-6 py-5">
                 <Link href="/" className="flex items-center gap-3">
