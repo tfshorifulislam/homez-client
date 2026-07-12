@@ -71,7 +71,7 @@ const AddPropertyPage = () => {
     // আপাতত অবজেক্ট তৈরিতে এটি ফাইল আকারে রাখা হলো।
     const property = {
       ...formData,
-      imageFile: imageFile, 
+      imageFile: imageFile,
       price: Number(formData.price),
       rating: Number(formData.rating),
       bedrooms: Number(formData.bedrooms),
@@ -91,8 +91,8 @@ const AddPropertyPage = () => {
       <Card className="border-muted shadow-lg backdrop-blur-sm">
         <CardHeader className="space-y-1 border-b bg-muted/20 p-6">
           <div className="flex items-center space-x-2">
-            <Building2 className="h-6 w-6 text-primary" />
-            <CardTitle className="text-2xl font-bold tracking-tight">List a New Property</CardTitle>
+            <Building2 className="h-6 w-6 text-blue-600" />
+            <CardTitle className="text-2xl font-bold tracking-tight text-blue-600">List a New Property</CardTitle>
           </div>
           <CardDescription>
             Provide detailed information to list your property on the marketplace.
@@ -101,17 +101,16 @@ const AddPropertyPage = () => {
 
         <CardContent className="p-6">
           <form onSubmit={handleSubmit} className="space-y-8">
-            
+
             {/* Image Upload Section */}
             <div className="space-y-2">
               <Label className="text-base font-semibold">Property Image</Label>
-              <div 
+              <div
                 onClick={() => !imagePreview && fileInputRef.current?.click()}
-                className={`group relative flex flex-col items-center justify-center rounded-xl border-2 border-dashed p-6 transition-all duration-200 ${
-                  imagePreview 
-                    ? "border-muted bg-muted/10 p-2" 
-                    : "border-muted-foreground/20 hover:border-primary hover:bg-primary/5 cursor-pointer"
-                }`}
+                className={`group relative flex flex-col items-center justify-center rounded-xl border-2 border-dashed p-6 transition-all duration-200 ${imagePreview
+                  ? "border-muted bg-muted/10 p-2"
+                  : "border-muted-foreground/20 hover:border-primary hover:bg-primary/5 cursor-pointer"
+                  }`}
               >
                 <input
                   type="file"
@@ -193,95 +192,84 @@ const AddPropertyPage = () => {
             {/* Price, Location, Details */}
             <div className="space-y-4 pt-2">
               <h3 className="text-lg font-semibold tracking-tight text-foreground/90">Pricing & Location</h3>
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                <div className="relative">
+              <div className="grid gap-6 md:grid-cols-2">
+                {/* Price */}
+                <div className="space-y-2">
                   <Label htmlFor="price">Price ($)</Label>
-                  <div className="relative mt-1.5">
+
+                  <div className="relative">
                     <DollarSign className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+
                     <Input
                       id="price"
                       type="number"
                       name="price"
-                      placeholder="0.00"
+                      placeholder="125000"
                       value={formData.price}
                       onChange={handleChange}
-                      className="pl-9 focus-visible:ring-primary"
+                      className="h-11 pl-10"
                     />
                   </div>
                 </div>
 
-                <div>
-                  <Label htmlFor="location">Location / Address</Label>
-                  <div className="relative mt-1.5">
+                {/* Property Type */}
+                <div className="space-y-2">
+                  <Label>Property Type</Label>
+
+                  <Select
+                    value={formData.propertyType}
+                    onValueChange={(value) => {
+                      setFormData((prev) => ({
+                        ...prev,
+                        propertyType: value ?? "",
+                      }));
+                    }}
+                  >
+                    <SelectTrigger className="h-11">
+                      <SelectValue placeholder="Select Property Type" />
+                    </SelectTrigger>
+
+                    <SelectContent>
+                      <SelectItem value="For sale">
+                        For Sale
+                      </SelectItem>
+
+                      <SelectItem value="For rent">
+                        For Rent
+                      </SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                {/* Location */}
+                <div className="space-y-2">
+                  <Label htmlFor="location">Location</Label>
+
+                  <div className="relative">
                     <MapPin className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+
                     <Input
                       id="location"
                       name="location"
-                      placeholder="City, State"
+                      placeholder="Gulshan, Dhaka"
                       value={formData.location}
                       onChange={handleChange}
-                      className="pl-9 focus-visible:ring-primary"
+                      className="h-11 pl-10"
                     />
                   </div>
                 </div>
 
-                <div>
-                  <Label htmlFor="date">Available From</Label>
-                  <div className="relative mt-1.5">
-                    <Calendar className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                    <Input
-                      id="date"
-                      type="date"
-                      name="date"
-                      value={formData.date}
-                      onChange={handleChange}
-                      className="pl-9 focus-visible:ring-primary"
-                    />
-                  </div>
-                </div>
-
-                <div>
+                {/* Category */}
+                <div className="space-y-2">
                   <Label htmlFor="category">Category</Label>
+
                   <Input
                     id="category"
                     name="category"
-                    placeholder="Apartment, Villa, Condo"
+                    placeholder="Apartment"
                     value={formData.category}
                     onChange={handleChange}
-                    className="mt-1.5 focus-visible:ring-primary"
-                  />
-                </div>
-
-                <div>
-                  <Label htmlFor="propertyType">Property Type</Label>
-                  <div className="mt-1.5">
-                    <Select
-                      onValueChange={(value) =>
-                        setFormData({ ...formData, propertyType: value })
-                      }
-                    >
-                      <SelectTrigger className="focus:ring-primary">
-                        <SelectValue placeholder="Select type" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="For sale">For Sale</SelectItem>
-                        <SelectItem value="For rent">For Rent</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                </div>
-
-                <div>
-                  <Label htmlFor="rating">Rating (Initial)</Label>
-                  <Input
-                    id="rating"
-                    type="number"
-                    step="0.1"
-                    name="rating"
-                    placeholder="5.0"
-                    value={formData.rating}
-                    onChange={handleChange}
-                    className="mt-1.5 focus-visible:ring-primary"
+                    className="h-11"
                   />
                 </div>
               </div>
@@ -341,49 +329,8 @@ const AddPropertyPage = () => {
               </div>
             </div>
 
-            {/* Status & Settings */}
             <div className="space-y-4 pt-2">
-              <h3 className="text-lg font-semibold tracking-tight text-foreground/90">Status & Settings</h3>
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-                <div>
-                  <Label>Featured</Label>
-                  <div className="mt-1.5">
-                    <Select
-                      onValueChange={(value) =>
-                        setFormData({ ...formData, featured: value })
-                      }
-                    >
-                      <SelectTrigger className="focus:ring-primary">
-                        <SelectValue placeholder="Featured?" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="true">Yes</SelectItem>
-                        <SelectItem value="false">No</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                </div>
-
-                <div>
-                  <Label>Status</Label>
-                  <div className="mt-1.5">
-                    <Select
-                      defaultValue="inActive"
-                      onValueChange={(value) =>
-                        setFormData({ ...formData, isActive: value })
-                      }
-                    >
-                      <SelectTrigger className="focus:ring-primary">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="active">Active</SelectItem>
-                        <SelectItem value="inActive">Inactive</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                </div>
-
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div>
                   <Label>User Name</Label>
                   <Input value={session?.user?.name ?? ""} readOnly className="mt-1.5 bg-muted/50 cursor-not-allowed" />
@@ -398,7 +345,7 @@ const AddPropertyPage = () => {
 
             {/* Submit Button */}
             <div className="pt-4">
-              <Button type="submit" className="w-full py-6 text-base font-semibold transition-all duration-200 shadow-md hover:shadow-lg">
+              <Button type="submit" className="w-full py-6 text-base font-semibold transition-all duration-200 shadow-md bg-blue-600 cursor-pointer hover:bg-blue-500">
                 Publish Property Listing
               </Button>
             </div>
