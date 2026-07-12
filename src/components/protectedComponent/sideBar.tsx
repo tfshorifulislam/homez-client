@@ -60,7 +60,7 @@ const menus: Record<Role, MenuItem[]> = {
         },
         {
             title: "Add Property",
-            href: "/dashboard/add-property",
+            href: "/seller/addproperty",
             icon: PlusSquare,
         },
         {
