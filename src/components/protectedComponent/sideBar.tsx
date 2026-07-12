@@ -14,6 +14,7 @@ import {
     User,
     Users,
 } from "lucide-react";
+import SidebarSkeleton from "../skeletonLoding/SidebarSkeleton";
 
 type Role = "buyer" | "seller" | "admin";
 
@@ -108,9 +109,12 @@ const menus: Record<Role, MenuItem[]> = {
 const SideBar = () => {
     const pathname = usePathname();
 
-    const { data: session } = useSession();
+    const { data: session, isPending } = useSession();
 
-    const role = (session?.user?.role as Role) ?? "buyer";
+    const role = (session?.user?.role as Role)
+    if (isPending) {
+        return <SidebarSkeleton />
+    }
 
     return (
         <aside className="sticky top-0 hidden h-screen w-60 flex-col border-r bg-white md:flex">
@@ -145,8 +149,8 @@ const SideBar = () => {
                             key={item.href}
                             href={item.href}
                             className={`flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium transition-all ${active
-                                    ? "bg-blue-600 text-white"
-                                    : "text-gray-600 hover:bg-gray-100 hover:text-blue-600"
+                                ? "bg-blue-600 text-white"
+                                : "text-gray-600 hover:bg-gray-100 hover:text-blue-600"
                                 }`}
                         >
                             <Icon className="h-5 w-5" />
