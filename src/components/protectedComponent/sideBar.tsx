@@ -38,18 +38,13 @@ const menus: Record<Role, MenuItem[]> = {
         },
         {
             title: "Wishlist",
-            href: "/dashboard/wishlist",
+            href: "/buyer/wishlist",
             icon: Heart,
         },
-        {
-            title: "My Bookings",
-            href: "/dashboard/bookings",
-            icon: ClipboardList,
-        },
         // {
-        //     title: "Settings",
-        //     href: "/dashboard/settings",
-        //     icon: Settings,
+        //     title: "My Bookings",
+        //     href: "/dashboard/bookings",
+        //     icon: ClipboardList,
         // },
     ],
 
@@ -74,11 +69,6 @@ const menus: Record<Role, MenuItem[]> = {
             href: "/profile",
             icon: User,
         },
-        // {
-        //     title: "Settings",
-        //     href: "/dashboard/settings",
-        //     icon: Settings,
-        // },
 
     ],
 
