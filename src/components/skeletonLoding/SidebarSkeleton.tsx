@@ -1,30 +1,34 @@
-'use client'
-import Link from "next/link";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const SidebarSkeleton = () => {
-  return (
-    <aside className="sticky top-0 hidden h-screen w-60 flex-col border-r bg-white md:flex">
-      <div className="border-b px-6 py-5">
-        <Link href="/" className="flex items-center gap-3">
-          <div className="h-10 w-10 animate-pulse rounded-xl bg-gray-200" />
+    return (
+        <aside className="sticky top-0 hidden h-screen w-60 flex-col border-r bg-white md:flex">
 
-          <div className="space-y-2">
-            <div className="h-4 w-24 animate-pulse rounded bg-gray-200" />
-            <div className="h-3 w-16 animate-pulse rounded bg-gray-200" />
-          </div>
-        </Link>
-      </div>
+            {/* Header Skeleton */}
+            <div className="border-b px-6 py-5">
+                <div className="flex items-center gap-3">
+                    <Skeleton className="h-10 w-10 rounded-xl" />
 
-      <div className="flex-1 space-y-3 p-4">
-        {Array.from({ length: 5 }).map((_, i) => (
-          <div
-            key={i}
-            className="h-11 animate-pulse rounded-lg bg-gray-200"
-          />
-        ))}
-      </div>
-    </aside>
-  );
+                    <div className="space-y-2">
+                        <Skeleton className="h-5 w-24" />
+                        <Skeleton className="h-3 w-20" />
+                    </div>
+                </div>
+            </div>
+
+
+            {/* Menu Skeleton */}
+            <nav className="flex-1 space-y-3 p-4">
+                {Array.from({ length: 4 }).map((_, index) => (
+                    <Skeleton
+                        key={index}
+                        className="h-11 w-full rounded-lg"
+                    />
+                ))}
+            </nav>
+
+        </aside>
+    );
 };
 
 export default SidebarSkeleton;

@@ -3,20 +3,22 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useSession } from "@/lib/auth-client";
+
 import {
     Building2,
-    ClipboardList,
     Heart,
     Home,
     LayoutDashboard,
     PlusSquare,
-    Settings,
     User,
     Users,
 } from "lucide-react";
+
 import SidebarSkeleton from "../skeletonLoding/SidebarSkeleton";
 
+
 type Role = "buyer" | "seller" | "admin";
+
 
 type MenuItem = {
     title: string;
@@ -24,7 +26,9 @@ type MenuItem = {
     icon: React.ElementType;
 };
 
+
 const menus: Record<Role, MenuItem[]> = {
+
     buyer: [
         {
             title: "Dashboard",
@@ -41,12 +45,8 @@ const menus: Record<Role, MenuItem[]> = {
             href: "/buyer/wishlist",
             icon: Heart,
         },
-        // {
-        //     title: "My Bookings",
-        //     href: "/dashboard/bookings",
-        //     icon: ClipboardList,
-        // },
     ],
+
 
     seller: [
         {
@@ -69,8 +69,8 @@ const menus: Record<Role, MenuItem[]> = {
             href: "/profile",
             icon: User,
         },
-
     ],
+
 
     admin: [
         {
@@ -88,70 +88,130 @@ const menus: Record<Role, MenuItem[]> = {
             href: "/admin/properties",
             icon: Building2,
         },
-        // {
-        //     title: "Advertisment",
-        //     href: "/admin/advertiesment",
-        //     icon: Settings,
-        // },
     ],
 };
 
+
+
 const SideBar = () => {
+
     const pathname = usePathname();
 
-    const { data: session, isPending } = useSession();
+    const {
+        data: session,
+        isPending,
+    } = useSession();
 
-    const role = (session?.user?.role as Role)
+
+
+    // Important for hydration
     if (isPending) {
-        return <SidebarSkeleton />
+        return <SidebarSkeleton />;
     }
 
+    if (!session) {
+        return null;
+    }
+
+    const role = (session.user.role as Role) ?? "buyer";
+    const menuItems = menus[role] ?? menus.buyer;
+
+
+
     return (
+
         <aside className="sticky top-0 hidden h-screen w-60 flex-col border-r bg-white md:flex">
+
+
             {/* Header */}
+
             <div className="border-b px-6 py-5">
-                <Link href="/" className="flex items-center gap-3">
+
+                <Link
+                    href="/"
+                    className="flex items-center gap-3"
+                >
+
                     <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-600 text-white">
+
                         <Home size={22} />
+
                     </div>
 
+
+
                     <div>
-                        <h2 className="text-xl font-bold text-blue-600">Homez</h2>
+
+                        <h2 className="text-xl font-bold text-blue-600">
+                            Homez
+                        </h2>
+
 
                         <p className="text-xs capitalize text-gray-500">
                             {role} Dashboard
                         </p>
+
+
                     </div>
+
+
                 </Link>
+
+
             </div>
 
             {/* Menu */}
+
             <nav className="flex-1 space-y-2 overflow-y-auto p-4">
-                {menus[role].map((item) => {
+
+
+                {menuItems.map((item) => {
+
+
                     const Icon = item.icon;
+
 
                     const active =
                         pathname === item.href ||
                         pathname.startsWith(item.href + "/");
-
                     return (
+
                         <Link
+
                             key={item.href}
+
                             href={item.href}
-                            className={`flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium transition-all ${active
-                                ? "bg-blue-600 text-white"
-                                : "text-gray-600 hover:bg-gray-100 hover:text-blue-600"
-                                }`}
+
+                            className={`flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium transition-all ${
+                                active
+                                    ? "bg-blue-600 text-white"
+                                    : "text-gray-600 hover:bg-gray-100 hover:text-blue-600"
+                            }`}
+
                         >
+
                             <Icon className="h-5 w-5" />
 
-                            <span>{item.title}</span>
+                            <span>
+                                {item.title}
+                            </span>
+
+
                         </Link>
+
                     );
+
+
                 })}
+
+
             </nav>
+
+
         </aside>
+
     );
 };
+
 
 export default SideBar;
