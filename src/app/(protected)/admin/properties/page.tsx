@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import { toast } from "react-toastify";
 import {
     CheckCircle2,
     MapPin,
@@ -58,11 +59,56 @@ const PendingPropertiesPage = () => {
     }, []);
 
     const handleAccept = async (id: string) => {
-        console.log("Accept:", id);
+        try {
+            const res = await fetch(
+                `${process.env.NEXT_PUBLIC_SERVER_URL}/api/property/accept/${id}`,
+                {
+                    method: "PATCH",
+                }
+            );
+
+            const data = await res.json();
+
+            if (!res.ok) {
+                toast.error(data.message);
+                return;
+            }
+
+            toast.success(data.message);
+
+            setProperties((prev) =>
+                prev.filter((property) => property._id !== id)
+            );
+        } catch (error) {
+            console.error(error);
+            toast.error("Something went wrong");
+        }
     };
 
     const handleReject = async (id: string) => {
-        console.log("Reject:", id);
+        try {
+            const res = await fetch(
+                `${process.env.NEXT_PUBLIC_SERVER_URL}/api/property/reject/${id}`,
+                {
+                    method: "DELETE",
+                }
+            );
+
+            const data = await res.json();
+
+            if (!res.ok) {
+                toast.error(data.message);
+                return;
+            }
+
+            toast.success(data.message);
+            setProperties((prev) =>
+                prev.filter((property) => property._id !== id)
+            );
+        } catch (error) {
+            console.error(error);
+            toast.error("Something went wrong");
+        }
     };
 
     if (loading) {
