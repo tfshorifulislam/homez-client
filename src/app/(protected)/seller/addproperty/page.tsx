@@ -67,23 +67,93 @@ const AddPropertyPage = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // এখানে আপনি imageFile টি ব্যাকএন্ড বা ক্লাউড সার্ভারে (যেমন Cloudinary) আপলোড করে URL পেতে পারেন।
-    // আপাতত অবজেক্ট তৈরিতে এটি ফাইল আকারে রাখা হলো।
-    const property = {
-      ...formData,
-      imageFile: imageFile,
-      price: Number(formData.price),
-      rating: Number(formData.rating),
-      bedrooms: Number(formData.bedrooms),
-      bathrooms: Number(formData.bathrooms),
-      area: Number(formData.area),
-      garage: Number(formData.garage),
-      featured: formData.featured === "true",
-      userEmail: session?.user?.email,
-      userName: session?.user?.name,
-    };
+    if (!imageFile) {
+      alert("Please select an image");
+      return;
+    }
 
-    console.log(property);
+    try {
+      // Upload image to ImgBB
+      const formDataImage = new FormData();
+      formDataImage.append("image", imageFile);
+
+      const uploadResponse = await fetch(
+        `https://api.imgbb.com/1/upload?key=${process.env.NEXT_PUBLIC_IMAGEBB}`,
+        {
+          method: "POST",
+          body: formDataImage,
+        }
+      );
+
+      const uploadResult = await uploadResponse.json();
+
+      if (!uploadResponse.ok || !uploadResult.success) {
+        throw new Error(uploadResult.error?.message || "Image upload failed");
+      }
+
+      const imageUrl = uploadResult.data.url;
+
+      // Property Object
+      const property = {
+        image: imageUrl,
+        title: formData.title,
+        description: formData.description,
+        price: Number(formData.price),
+        rating: Number(formData.rating),
+        location: formData.location,
+        date: formData.date,
+        category: formData.category,
+        bedrooms: Number(formData.bedrooms),
+        bathrooms: Number(formData.bathrooms),
+        area: Number(formData.area),
+        garage: Number(formData.garage),
+        propertyType: formData.propertyType,
+        featured: formData.featured === "true",
+        isActive: formData.isActive,
+        userEmail: session?.user?.email,
+        userName: session?.user?.name,
+      };
+
+      // Save to backend
+      const response = await fetch("http://localhost:5000/api/addproperty", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(property),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.message || "Failed to save property");
+      }
+
+      alert("Property added successfully!");
+
+      // Reset Form
+      setFormData({
+        title: "",
+        description: "",
+        price: "",
+        rating: "",
+        location: "",
+        date: "",
+        category: "",
+        bedrooms: "",
+        bathrooms: "",
+        area: "",
+        garage: "",
+        propertyType: "",
+        featured: "false",
+        isActive: "inActive",
+      });
+
+      removeImage();
+    } catch (error) {
+      console.error(error);
+      alert(error instanceof Error ? error.message : "Something went wrong");
+    }
   };
 
   return (
