@@ -80,7 +80,7 @@ const menus: Record<Role, MenuItem[]> = {
         },
         {
             title: "Users",
-            href: "/dashboard/users",
+            href: "/admin/users",
             icon: Users,
         },
         {
