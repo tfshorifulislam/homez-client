@@ -51,11 +51,13 @@ const PropertyCard = ({ property, totalPages, currentPage }: PropertyCardProps) 
             return;
         }
 
+        const isSaved = savedProperties.includes(propertyId);
+
         try {
             const res = await fetch(
                 `${process.env.NEXT_PUBLIC_SERVER_URL}/api/wishlist`,
                 {
-                    method: "POST",
+                    method: isSaved ? "DELETE" : "POST",
                     headers: {
                         "Content-Type": "application/json",
                     },
@@ -69,14 +71,29 @@ const PropertyCard = ({ property, totalPages, currentPage }: PropertyCardProps) 
             const data = await res.json();
 
             if (!res.ok) {
-                toast.error(data.message || "Failed to save property");
+                toast.error(data.message || "Something went wrong");
                 return;
             }
-            setSavedProperties((prev) => [...prev, propertyId]);
-            toast.success("Property saved successfully");
+
+
+            if (isSaved) {
+                setSavedProperties((prev) =>
+                    prev.filter((id) => id !== propertyId)
+                );
+
+                toast.success("Removed from wishlist");
+            } else {
+                setSavedProperties((prev) => [
+                    ...prev,
+                    propertyId,
+                ]);
+
+                toast.success("Property saved successfully");
+            }
+
         } catch (error) {
             console.error(error);
-            alert("Something went wrong");
+            toast.error("Something went wrong");
         }
     };
 
