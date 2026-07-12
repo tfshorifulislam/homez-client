@@ -84,8 +84,8 @@ const menus: Record<Role, MenuItem[]> = {
             icon: Users,
         },
         {
-            title: "Properties",
-            href: "/dashboard/properties",
+            title: "Pending Properties",
+            href: "/admin/properties",
             icon: Building2,
         },
         // {
