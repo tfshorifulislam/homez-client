@@ -89,8 +89,8 @@ const menus: Record<Role, MenuItem[]> = {
             icon: Building2,
         },
         // {
-        //     title: "Settings",
-        //     href: "/dashboard/settings",
+        //     title: "Advertisment",
+        //     href: "/admin/advertiesment",
         //     icon: Settings,
         // },
     ],

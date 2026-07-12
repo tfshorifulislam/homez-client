@@ -61,7 +61,12 @@ export const getAllProperty = async (
     params.append("sort", sort);
   }
 
-  const res = await fetch(`${baseUrl}/api/all-properties?${params.toString()}`);
+  const res = await fetch(
+    `${baseUrl}/api/all-properties?${params.toString()}`,
+    {
+      cache: "no-store",
+    }
+  );
 
   if (!res.ok) {
     throw new Error("Failed to fetch properties");

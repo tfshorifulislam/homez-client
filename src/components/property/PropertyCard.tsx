@@ -25,26 +25,7 @@ const PropertyCard = ({ property, totalPages, currentPage }: PropertyCardProps) 
     const { data: session } = useSession();
     const [savedProperties, setSavedProperties] = useState<string[]>([]);
 
-    useEffect(() => {
-        if (!session?.user?.email) return;
-
-        const fetchWishlist = async () => {
-            try {
-                const res = await fetch(
-                    `${process.env.NEXT_PUBLIC_SERVER_URL}/api/wishlist/${session.user.email}`
-                );
-
-                const data: WishlistItem[] = await res.json();
-
-                setSavedProperties(data.map((item) => item.propertyId));
-            } catch (error) {
-                console.error(error);
-            }
-        };
-
-        fetchWishlist();
-    }, [session?.user?.email]);
-
+    
     const handleWishlist = async (propertyId: string) => {
         if (!session?.user?.email) {
             toast.error("Please login first.");
