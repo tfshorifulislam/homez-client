@@ -65,7 +65,7 @@ const menus: Record<Role, MenuItem[]> = {
         },
         {
             title: "My Properties",
-            href: "/dashboard/my-properties",
+            href: "/seller/my-properties",
             icon: Building2,
         },
         {
