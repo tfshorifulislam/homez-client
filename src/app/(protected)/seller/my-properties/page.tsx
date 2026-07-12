@@ -3,9 +3,10 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useSession } from "@/lib/auth-client";
-import { Trash2, Loader2, } from "lucide-react";
+import { Trash2, Loader2, Pencil, } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import DeleteDialog from "./DeleteDialog";
 
 type Property = {
     _id: string;
@@ -147,23 +148,13 @@ const MyPropertiesPage = () => {
                                     </span>
                                 )}
                             </div>
-
                             <div className="flex gap-2">
-                                <Link
-                                    href={`/seller/edit-property/${item._id}`}
-                                    className="flex-1 rounded-lg bg-blue-600 py-2 text-center text-sm font-medium text-white transition hover:bg-blue-700"
-                                >
-                                    Edit
-                                </Link>
 
-                                <Button
-                                    variant="destructive"
-                                    size="icon"
-                                    className="shrink-0"
-                                >
-                                    <Trash2 className="h-4 w-4" />
-                                </Button>
+                                <div>
+                                    <DeleteDialog/>
+                                </div>
                             </div>
+
                         </div>
                     </div>
                 ))}
