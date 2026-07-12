@@ -46,11 +46,11 @@ const menus: Record<Role, MenuItem[]> = {
             href: "/dashboard/bookings",
             icon: ClipboardList,
         },
-        {
-            title: "Settings",
-            href: "/dashboard/settings",
-            icon: Settings,
-        },
+        // {
+        //     title: "Settings",
+        //     href: "/dashboard/settings",
+        //     icon: Settings,
+        // },
     ],
 
     seller: [
@@ -74,11 +74,11 @@ const menus: Record<Role, MenuItem[]> = {
             href: "/profile",
             icon: User,
         },
-        {
-            title: "Settings",
-            href: "/dashboard/settings",
-            icon: Settings,
-        },
+        // {
+        //     title: "Settings",
+        //     href: "/dashboard/settings",
+        //     icon: Settings,
+        // },
 
     ],
 
@@ -98,11 +98,11 @@ const menus: Record<Role, MenuItem[]> = {
             href: "/dashboard/properties",
             icon: Building2,
         },
-        {
-            title: "Settings",
-            href: "/dashboard/settings",
-            icon: Settings,
-        },
+        // {
+        //     title: "Settings",
+        //     href: "/dashboard/settings",
+        //     icon: Settings,
+        // },
     ],
 };
 

@@ -4,14 +4,82 @@ import { Property } from '@/lib/api/property';
 import Image from 'next/image';
 import Link from 'next/link';
 import PaginationSystem from './PaginationSystem';
+import { Heart } from "lucide-react";
+import { useSession } from '@/lib/auth-client';
+import { toast } from 'react-toastify';
+import { useEffect, useState } from "react";
 
 type PropertyCardProps = {
-  property: Property[];
-  totalPages: number;
-  currentPage: number;
+    property: Property[];
+    totalPages: number;
+    currentPage: number;
 };
 
-const PropertyCard = ({ property, totalPages, currentPage}: PropertyCardProps) => {
+type WishlistItem = {
+    _id: string;
+    userEmail: string;
+    propertyId: string;
+};
+
+const PropertyCard = ({ property, totalPages, currentPage }: PropertyCardProps) => {
+    const { data: session } = useSession();
+    const [savedProperties, setSavedProperties] = useState<string[]>([]);
+
+    useEffect(() => {
+        if (!session?.user?.email) return;
+
+        const fetchWishlist = async () => {
+            try {
+                const res = await fetch(
+                    `${process.env.NEXT_PUBLIC_SERVER_URL}/api/wishlist/${session.user.email}`
+                );
+
+                const data: WishlistItem[] = await res.json();
+
+                setSavedProperties(data.map((item) => item.propertyId));
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        fetchWishlist();
+    }, [session?.user?.email]);
+
+    const handleWishlist = async (propertyId: string) => {
+        if (!session?.user?.email) {
+            toast.error("Please login first.");
+            return;
+        }
+
+        try {
+            const res = await fetch(
+                `${process.env.NEXT_PUBLIC_SERVER_URL}/api/wishlist`,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        propertyId,
+                        userEmail: session.user.email,
+                    }),
+                }
+            );
+
+            const data = await res.json();
+
+            if (!res.ok) {
+                toast.error(data.message || "Failed to save property");
+                return;
+            }
+            setSavedProperties((prev) => [...prev, propertyId]);
+            toast.success("Property saved successfully");
+        } catch (error) {
+            console.error(error);
+            alert("Something went wrong");
+        }
+    };
+
     return (
         <div>
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
@@ -25,6 +93,19 @@ const PropertyCard = ({ property, totalPages, currentPage}: PropertyCardProps) =
                                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
                                 className="object-cover transition-transform duration-500 hover:scale-110"
                             />
+
+                            {/* Save Button */}
+                            <button
+                                onClick={() => handleWishlist(item._id)}
+                                className="absolute right-3 top-3 flex h-10 w-10 items-center justify-center rounded-full bg-white/90 shadow-md backdrop-blur transition hover:scale-110"
+                            >
+                                <Heart
+                                    className={`h-5 w-5 transition-colors ${savedProperties.includes(item._id)
+                                        ? "fill-red-500 text-red-500"
+                                        : "text-gray-600 hover:fill-red-500 hover:text-red-500"
+                                        }`}
+                                />
+                            </button>
                         </div>
 
                         <div className="p-4">

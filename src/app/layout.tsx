@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/shared/Navbar";
 import MobileNavigation from "@/components/shared/MobileNavigation";
 import Footer from "@/components/shared/Footer";
+import { ToastContainer } from "react-toastify";
 
 
 const inter = Inter({
@@ -33,6 +34,7 @@ export default function RootLayout({
         </main>
         <Footer />
         <MobileNavigation />
+         <ToastContainer />
       </body>
     </html>
   );
