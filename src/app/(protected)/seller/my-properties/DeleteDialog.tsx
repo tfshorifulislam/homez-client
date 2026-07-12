@@ -12,14 +12,44 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Trash2 } from "lucide-react";
+import { toast } from "react-toastify";
 
-const DeleteDialog = () => {
+type DeleteDialogProps = {
+  id: string;
+};
+
+const DeleteDialog = ({ id }: DeleteDialogProps) => {
+  const handleDelete = async () => {
+    try {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/api/property/${id}`,
+        {
+          method: "DELETE",
+        }
+      );
+
+      const data = await res.json();
+
+      if (data.deletedCount > 0 || data.success) {
+        toast.success("Property deleted successfully.");
+        window.location.reload();
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to delete property.");
+    }
+  };
+
   return (
     <Dialog>
       <DialogTrigger
         render={
-          <Button variant="destructive" size="icon">
-            <Trash2 className="h-4 w-4" />
+          <Button
+            variant="destructive"
+            className="w-full"
+          >
+            <Trash2 className="mr-2 h-4 w-4" />
+            Delete
           </Button>
         }
       />
@@ -49,9 +79,17 @@ const DeleteDialog = () => {
             }
           />
 
-          <Button variant="destructive" className="flex-1">
-            Delete
-          </Button>
+          <DialogClose
+            render={
+              <Button
+                variant="destructive"
+                className="flex-1"
+                onClick={handleDelete}
+              >
+                Delete
+              </Button>
+            }
+          />
         </DialogFooter>
       </DialogContent>
     </Dialog>

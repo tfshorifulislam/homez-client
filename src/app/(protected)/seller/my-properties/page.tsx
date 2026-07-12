@@ -3,9 +3,7 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useSession } from "@/lib/auth-client";
-import { Trash2, Loader2, Pencil, } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
+import {  Loader2,  } from "lucide-react";
 import DeleteDialog from "./DeleteDialog";
 
 type Property = {
@@ -148,12 +146,10 @@ const MyPropertiesPage = () => {
                                     </span>
                                 )}
                             </div>
-                            <div className="flex gap-2">
-
                                 <div>
-                                    <DeleteDialog/>
+                                    <DeleteDialog id={item._id}/>
                                 </div>
-                            </div>
+                            
 
                         </div>
                     </div>

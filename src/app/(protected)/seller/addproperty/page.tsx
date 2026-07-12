@@ -15,6 +15,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { ImagePlus, X, Building2, DollarSign, MapPin, Calendar, BedDouble, Bath, Square, Car } from "lucide-react";
+import { toast } from "react-toastify";
 
 const AddPropertyPage = () => {
   const { data: session } = useSession();
@@ -68,7 +69,7 @@ const AddPropertyPage = () => {
     e.preventDefault();
 
     if (!imageFile) {
-      alert("Please select an image");
+      toast.error("Please select an image");
       return;
     }
 
@@ -129,7 +130,7 @@ const AddPropertyPage = () => {
         throw new Error(result.message || "Failed to save property");
       }
 
-      alert("Property added successfully!");
+      toast.success("Property added successfully!");
 
       // Reset Form
       setFormData({
@@ -152,7 +153,7 @@ const AddPropertyPage = () => {
       removeImage();
     } catch (error) {
       console.error(error);
-      alert(error instanceof Error ? error.message : "Something went wrong");
+      toast.error(error instanceof Error ? error.message : "Something went wrong");
     }
   };
 
