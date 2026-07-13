@@ -45,17 +45,17 @@ const companies: Company[] = [
 
 const TrustedCompanies = () => {
     return (
-        <section className="w-full border-y bg-slate-50 py-12">
-            <div className="mx-auto mb-8 max-w-7xl px-4 text-center">
-                <p className="text-sm font-semibold uppercase tracking-[0.25em] text-blue-600">
+        <section className="w-full border-y bg-slate-50 py-8 md:py-12">
+            <div className="mx-auto mb-6 md:mb-8 max-w-7xl px-4 text-center">
+                <p className="text-xs md:text-sm font-semibold uppercase tracking-[0.25em] text-blue-600">
                     Trusted Worldwide
                 </p>
 
-                <h2 className="mt-2 text-3xl font-bold">
+                <h2 className="mt-2 text-2xl md:text-3xl font-bold">
                     Trusted by Leading Real Estate Companies
                 </h2>
 
-                <p className="mt-3 text-gray-500">
+                <p className="mt-3 text-sm md:text-base text-gray-500">
                     Connecting buyers, sellers and investors with industry-leading real
                     estate brands.
                 </p>
@@ -64,13 +64,14 @@ const TrustedCompanies = () => {
             <Marquee
                 speed={40}
                 gradient
-                gradientWidth={120}
+                gradientWidth={40}
                 pauseOnHover
             >
                 {companies.map((company) => (
                     <div
                         key={company.name}
-                        className="mx-5 flex h-24 w-52 items-center justify-center rounded-2xl border bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg"
+                       
+                        className="mx-3 md:mx-5 flex h-16 w-30 md:h-24 md:w-52 items-center justify-center rounded-xl md:rounded-2xl border bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg"
                     >
                         <Image
                             src={company.logo}
