@@ -1,9 +1,9 @@
+
 # 🏡 Homez - Dynamic Real Estate Ecosystem
 
 **Homez** is a modern, full-featured, multi-role Real Estate Platform that connects Buyers, Sellers, and Admins in one seamless ecosystem. Built with performance, scalability, and beautiful UX in mind.
 
-![Homez Banner](./public/screenshots/home-page.png)
-
+![Homez Banner](https://github.com/user-attachments/assets/34089fb0-0fc9-4340-8e19-873d9dad7854)
 ## ✨ Live Links
 
 - **🌐 Client (Frontend):** [https://homez-two.vercel.app](https://homez-two.vercel.app)
