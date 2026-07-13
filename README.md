@@ -13,11 +13,8 @@
 
 ## 📸 Screenshots
 
-### Landing Page
-![Landing Page](./public/screenshots/home-page.png)
-
-*(Add more screenshots in the `/public/screenshots` folder for Dashboard, Property Listing, Analytics, etc.)*
-
+### Full Landing Page
+![Landing Page](https://github.com/user-attachments/assets/6238325c-a774-43ee-a21e-b4fe248a8840)
 ---
 
 ## 🔥 Key Features
