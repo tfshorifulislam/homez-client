@@ -2,8 +2,8 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { useSession } from "@/lib/auth-client";
-import {  Loader2,  } from "lucide-react";
+import { authClient, useSession } from "@/lib/auth-client";
+import { Loader2, } from "lucide-react";
 import DeleteDialog from "./DeleteDialog";
 
 type Property = {
@@ -24,6 +24,7 @@ type Property = {
     isActive: "active" | "inActive";
 };
 
+
 const MyPropertiesPage = () => {
     const { data: session } = useSession();
 
@@ -34,12 +35,30 @@ const MyPropertiesPage = () => {
         if (!session?.user?.email) return;
 
         const fetchProperties = async () => {
+
+            //client component get token.
+
             try {
+                const { data: userToken } = await authClient.token();
+
+                if (!userToken) {
+                    console.error("Token not found");
+                    return;
+                }
+
                 const res = await fetch(
-                    `${process.env.NEXT_PUBLIC_SERVER_URL}/api/my-properties/${session.user.email}`
+                    `${process.env.NEXT_PUBLIC_SERVER_URL}/api/my-properties/${session.user.email}`,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${userToken.token}`,
+                        },
+                    }
                 );
 
                 const data = await res.json();
+                console.log(data);
+                console.log(Array.isArray(data));
+
                 setProperties(data);
             } catch (error) {
                 console.error(error);
@@ -146,10 +165,10 @@ const MyPropertiesPage = () => {
                                     </span>
                                 )}
                             </div>
-                                <div>
-                                    <DeleteDialog id={item._id}/>
-                                </div>
-                            
+                            <div>
+                                <DeleteDialog id={item._id} />
+                            </div>
+
 
                         </div>
                     </div>
