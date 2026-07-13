@@ -11,6 +11,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { authClient } from "@/lib/auth-client";
 import { Trash2 } from "lucide-react";
 import { toast } from "react-toastify";
 
@@ -21,10 +22,22 @@ type DeleteDialogProps = {
 const DeleteDialog = ({ id }: DeleteDialogProps) => {
   const handleDelete = async () => {
     try {
+
+      const { data: userToken } = await authClient.token();
+
+      if (!userToken) {
+        console.error("Token not found");
+        return;
+      }
+
+
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_SERVER_URL}/api/property/${id}`,
         {
           method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${userToken.token}`,
+          },
         }
       );
 
