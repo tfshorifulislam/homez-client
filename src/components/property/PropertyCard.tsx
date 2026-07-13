@@ -5,9 +5,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 import PaginationSystem from './PaginationSystem';
 import { Heart } from "lucide-react";
-import { useSession } from '@/lib/auth-client';
+import { authClient, useSession } from '@/lib/auth-client';
 import { toast } from 'react-toastify';
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 type PropertyCardProps = {
     property: Property[];
@@ -15,17 +15,12 @@ type PropertyCardProps = {
     currentPage: number;
 };
 
-type WishlistItem = {
-    _id: string;
-    userEmail: string;
-    propertyId: string;
-};
 
 const PropertyCard = ({ property, totalPages, currentPage }: PropertyCardProps) => {
     const { data: session } = useSession();
     const [savedProperties, setSavedProperties] = useState<string[]>([]);
 
-    
+
     const handleWishlist = async (propertyId: string) => {
         if (!session?.user?.email) {
             toast.error("Please login first.");
@@ -35,12 +30,22 @@ const PropertyCard = ({ property, totalPages, currentPage }: PropertyCardProps) 
         const isSaved = savedProperties.includes(propertyId);
 
         try {
+
+
+            const { data: userToken } = await authClient.token();
+
+            if (!userToken) {
+                console.error("Token not found");
+                return;
+            }
+
             const res = await fetch(
                 `${process.env.NEXT_PUBLIC_SERVER_URL}/api/wishlist`,
                 {
                     method: isSaved ? "DELETE" : "POST",
                     headers: {
                         "Content-Type": "application/json",
+                        Authorization: `Bearer ${userToken.token}`,
                     },
                     body: JSON.stringify({
                         propertyId,
