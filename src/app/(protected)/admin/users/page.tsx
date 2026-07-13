@@ -1,5 +1,6 @@
 'use client';
 
+import { authClient } from "@/lib/auth-client";
 import { useEffect, useState } from "react";
 
 type User = {
@@ -17,8 +18,21 @@ const UserPage = () => {
     useEffect(() => {
         const fetchUsers = async () => {
             try {
+
+                const { data: userToken } = await authClient.token();
+
+                if (!userToken) {
+                    console.error("Token not found");
+                    return;
+                }
+
+
                 const res = await fetch(
-                    `${process.env.NEXT_PUBLIC_SERVER_URL}/api/user`
+                    `${process.env.NEXT_PUBLIC_SERVER_URL}/api/user`, {
+                    headers: {
+                        Authorization: `Bearer ${userToken.token}`,
+                    },
+                }
                 );
 
                 const data = await res.json();
@@ -100,11 +114,10 @@ const UserPage = () => {
 
                                 <td className="px-4 py-4">
                                     <span
-                                        className={`rounded-full px-3 py-1 text-sm font-medium ${
-                                            user.status === "blocked"
-                                                ? "bg-red-100 text-red-700"
-                                                : "bg-green-100 text-green-700"
-                                        }`}
+                                        className={`rounded-full px-3 py-1 text-sm font-medium ${user.status === "blocked"
+                                            ? "bg-red-100 text-red-700"
+                                            : "bg-green-100 text-green-700"
+                                            }`}
                                     >
                                         {user.status ?? "Active"}
                                     </span>

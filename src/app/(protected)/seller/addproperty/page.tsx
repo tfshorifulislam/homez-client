@@ -1,6 +1,6 @@
 "use client";
 
-import { useSession } from "@/lib/auth-client";
+import { authClient, useSession } from "@/lib/auth-client";
 import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
@@ -117,11 +117,19 @@ const AddPropertyPage = () => {
         userName: session?.user?.name,
       };
 
-      // Save to backend
-      const response = await fetch("http://localhost:5000/api/addproperty", {
+
+      const { data: userToken } = await authClient.token();
+
+      if (!userToken) {
+        console.error("Token not found");
+        return;
+      }
+
+      const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/addproperty`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${userToken.token}`,
         },
         body: JSON.stringify(property),
       });

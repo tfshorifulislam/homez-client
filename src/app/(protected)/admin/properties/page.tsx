@@ -16,6 +16,7 @@ import {
     CardContent,
     CardFooter,
 } from "@/components/ui/card";
+import { authClient } from "@/lib/auth-client";
 
 export type Property = {
     _id: string;
@@ -42,8 +43,20 @@ const PendingPropertiesPage = () => {
     useEffect(() => {
         const fetchProperties = async () => {
             try {
+
+                const { data: userToken } = await authClient.token();
+
+                if (!userToken) {
+                    console.error("Token not found");
+                    return;
+                }
+
                 const res = await fetch(
-                    `${process.env.NEXT_PUBLIC_SERVER_URL}/api/inactive`
+                    `${process.env.NEXT_PUBLIC_SERVER_URL}/api/inactive`, {
+                    headers: {
+                        Authorization: `Bearer ${userToken.token}`,
+                    },
+                }
                 );
 
                 const data = await res.json();
@@ -60,10 +73,22 @@ const PendingPropertiesPage = () => {
 
     const handleAccept = async (id: string) => {
         try {
+
+            const { data: userToken } = await authClient.token();
+
+            if (!userToken) {
+                console.error("Token not found");
+                return;
+            }
+
+
             const res = await fetch(
                 `${process.env.NEXT_PUBLIC_SERVER_URL}/api/property/accept/${id}`,
                 {
                     method: "PATCH",
+                    headers: {
+                        Authorization: `Bearer ${userToken.token}`,
+                    },
                 }
             );
 
@@ -87,10 +112,23 @@ const PendingPropertiesPage = () => {
 
     const handleReject = async (id: string) => {
         try {
+
+
+            const { data: userToken } = await authClient.token();
+
+            if (!userToken) {
+                console.error("Token not found");
+                return;
+            }
+
+
             const res = await fetch(
                 `${process.env.NEXT_PUBLIC_SERVER_URL}/api/property/reject/${id}`,
                 {
                     method: "DELETE",
+                    headers: {
+                        Authorization: `Bearer ${userToken.token}`,
+                    },
                 }
             );
 
