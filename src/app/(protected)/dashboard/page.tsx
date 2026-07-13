@@ -15,8 +15,11 @@ import {
   Cell,
   LineChart,
   Line,
+  AreaChart,
+  Area,
+  ComposedChart,
+  Legend
 } from "recharts";
-
 
 type Role = "admin" | "seller" | "buyer";
 
@@ -28,7 +31,12 @@ interface StatItem {
 interface ChartData {
   month: string;
   sales?: number; 
-  marketPrice?: number; 
+  marketPrice?: number;
+  revenue?: number;
+  earnings?: number;
+  budgetLimit?: number;
+  tasks?: number;
+  successRate?: number;
 }
 
 interface PieData {
@@ -54,7 +62,6 @@ interface DashboardConfig {
   listItems: ListItem[];
 }
 
-
 const roleConfig: Record<Role, DashboardConfig> = {
   admin: {
     title: "System Admin Dashboard",
@@ -66,12 +73,12 @@ const roleConfig: Record<Role, DashboardConfig> = {
       { title: "Platform Revenue (10% Commission)", value: "$54.2K" },
     ],
     chartData: [
-      { month: "Jan", sales: 120 },
-      { month: "Feb", sales: 145 },
-      { month: "Mar", sales: 130 },
-      { month: "Apr", sales: 190 },
-      { month: "May", sales: 220 },
-      { month: "Jun", sales: 280 },
+      { month: "Jan", sales: 120, revenue: 15000, tasks: 40, successRate: 85 },
+      { month: "Feb", sales: 145, revenue: 19000, tasks: 45, successRate: 88 },
+      { month: "Mar", sales: 130, revenue: 17500, tasks: 50, successRate: 82 },
+      { month: "Apr", sales: 190, revenue: 24000, tasks: 65, successRate: 91 },
+      { month: "May", sales: 220, revenue: 29000, tasks: 70, successRate: 94 },
+      { month: "Jun", sales: 280, revenue: 38000, tasks: 85, successRate: 96 },
     ],
     pieData: [
       { name: "Apartments", value: 640 },
@@ -95,12 +102,12 @@ const roleConfig: Record<Role, DashboardConfig> = {
       { title: "Total Net Earnings", value: "$138,500" },
     ],
     chartData: [
-      { month: "Jan", sales: 0 },
-      { month: "Feb", sales: 1 },
-      { month: "Mar", sales: 0 },
-      { month: "Apr", sales: 2 },
-      { month: "May", sales: 0 },
-      { month: "Jun", sales: 1 },
+      { month: "Jan", sales: 0, earnings: 10000, tasks: 5, successRate: 40 },
+      { month: "Feb", sales: 1, earnings: 35000, tasks: 8, successRate: 60 },
+      { month: "Mar", sales: 0, earnings: 35000, tasks: 6, successRate: 50 },
+      { month: "Apr", sales: 2, earnings: 85000, tasks: 12, successRate: 75 },
+      { month: "May", sales: 0, earnings: 85000, tasks: 10, successRate: 70 },
+      { month: "Jun", sales: 1, earnings: 138500, tasks: 15, successRate: 85 },
     ],
     pieData: [
       { name: "Active Listings", value: 7 },
@@ -124,12 +131,12 @@ const roleConfig: Record<Role, DashboardConfig> = {
       { title: "Pre-Approved Budget Limit", value: "$350,000" },
     ],
     chartData: [
-      { month: "Jan", marketPrice: 4200 },
-      { month: "Feb", marketPrice: 4350 },
-      { month: "Mar", marketPrice: 4300 },
-      { month: "Apr", marketPrice: 4500 },
-      { month: "May", marketPrice: 4750 },
-      { month: "Jun", marketPrice: 4900 },
+      { month: "Jan", marketPrice: 4200, budgetLimit: 250000, tasks: 4, successRate: 30 },
+      { month: "Feb", marketPrice: 4350, budgetLimit: 270000, tasks: 6, successRate: 45 },
+      { month: "Mar", marketPrice: 4300, budgetLimit: 270000, tasks: 5, successRate: 40 },
+      { month: "Apr", marketPrice: 4500, budgetLimit: 300000, tasks: 9, successRate: 65 },
+      { month: "May", marketPrice: 4750, budgetLimit: 320000, tasks: 11, successRate: 70 },
+      { month: "Jun", marketPrice: 4900, budgetLimit: 350000, tasks: 14, successRate: 80 },
     ],
     pieData: [
       { name: "Properties Liked", value: 12 },
@@ -149,10 +156,8 @@ const COLORS = ["#3b82f6", "#10b981", "#f59e0b", "#8b5cf6"];
 
 export default function DynamicDashboardPage() {
   const [mounted, setMounted] = useState<boolean>(false);
-
   const { data: session } = useSession();
-  
-  
+
   const role = (session?.user?.role as Role) || "buyer";
   const currentData = roleConfig[role];
 
@@ -161,16 +166,15 @@ export default function DynamicDashboardPage() {
   }, []);
 
   return (
-    <div className="space-y-8 p-6 bg-gray-50 min-h-screen">
+    <div className="space-y-8 bg-gray-50 p-4 md:p-6 min-h-screen">
       
       {/* Top Header & Role Displayer */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between border-b pb-5">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 tracking-tight">{currentData.title}</h1>
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-900 tracking-tight">{currentData.title}</h1>
           <p className="text-gray-500 mt-1 text-sm max-w-2xl">{currentData.subtitle}</p>
         </div>
         
-        {/* ড্রপডাউন এর জায়গায় সরাসরি Role ব্যাজ প্রদর্শন */}
         <div className="rounded-lg border bg-white px-4 py-2 shadow-sm self-start sm:self-auto">
           <p className="text-xs text-gray-500 font-medium">Current Role</p>
           <p className="font-semibold capitalize text-gray-800 text-sm">{role}</p>
@@ -178,33 +182,34 @@ export default function DynamicDashboardPage() {
       </div>
 
       {/* Dynamic Stats Grid */}
-      <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
         {currentData.stats.map((item) => (
           <div
             key={item.title}
-            className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm transition-all hover:shadow-md"
+            className="rounded-xl border border-gray-200 bg-white p-5 md:p-6 shadow-sm transition-all hover:shadow-md"
           >
             <p className="text-xs font-medium uppercase tracking-wider text-gray-400">{item.title}</p>
-            <h2 className="mt-2 text-2xl font-bold text-gray-900">{item.value}</h2>
+            <h2 className="mt-2 text-xl md:text-2xl font-bold text-gray-900">{item.value}</h2>
           </div>
         ))}
       </div>
 
       {/* Charts Section */}
       {!mounted ? (
-        <div className="grid gap-6 lg:grid-cols-2">
+        <div className="grid gap-6 md:grid-cols-2">
+          <div className="h-[340px] animate-pulse rounded-xl bg-gray-200" />
+          <div className="h-[340px] animate-pulse rounded-xl bg-gray-200" />
           <div className="h-[340px] animate-pulse rounded-xl bg-gray-200" />
           <div className="h-[340px] animate-pulse rounded-xl bg-gray-200" />
         </div>
       ) : (
-        <div className="grid gap-6 lg:grid-cols-2">
+        <div className="grid gap-6 md:grid-cols-2">
           
-          {/* Contextual Chart */}
-          <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
-            <h2 className="mb-5 text-lg font-semibold text-gray-800">
-              {role === "buyer" ? "Average Market Price Trend (BDT / Sq. Ft)" : "Sales Analytics Volume"}
+          {/* Chart 1: Volume/Price Trend (Line or Bar) */}
+          <div className="rounded-xl border border-gray-200 bg-white p-4 md:p-6 shadow-sm">
+            <h2 className="mb-5 text-base md:text-lg font-semibold text-gray-800">
+              {role === "buyer" ? "Average Market Price Trend (USD / Sq. Ft)" : "Sales Analytics Volume"}
             </h2>
-
             <ResponsiveContainer width="100%" height={300}>
               {role === "buyer" ? (
                 <LineChart data={currentData.chartData}>
@@ -212,7 +217,8 @@ export default function DynamicDashboardPage() {
                   <XAxis dataKey="month" stroke="#9ca3af" fontSize={12} />
                   <YAxis stroke="#9ca3af" fontSize={12} />
                   <Tooltip />
-                  <Line type="monotone" dataKey="marketPrice" stroke="#3b82f6" strokeWidth={3} activeDot={{ r: 6 }} />
+                  <Legend />
+                  <Line name="Market Price" type="monotone" dataKey="marketPrice" stroke="#3b82f6" strokeWidth={3} activeDot={{ r: 6 }} />
                 </LineChart>
               ) : (
                 <BarChart data={currentData.chartData}>
@@ -220,18 +226,67 @@ export default function DynamicDashboardPage() {
                   <XAxis dataKey="month" stroke="#9ca3af" fontSize={12} />
                   <YAxis stroke="#9ca3af" fontSize={12} />
                   <Tooltip />
-                  <Bar dataKey="sales" radius={[4, 4, 0, 0]} fill={role === "admin" ? "#10b981" : "#3b82f6"} />
+                  <Legend />
+                  <Bar name="Properties Sold" dataKey="sales" radius={[4, 4, 0, 0]} fill={role === "admin" ? "#10b981" : "#3b82f6"} />
                 </BarChart>
               )}
             </ResponsiveContainer>
           </div>
 
-          {/* Contextual Pie Chart */}
-          <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
-            <h2 className="mb-5 text-lg font-semibold text-gray-800">
+          {/* Chart 2: Financial Growth Trend (Area Chart) - NEW */}
+          <div className="rounded-xl border border-gray-200 bg-white p-4 md:p-6 shadow-sm">
+            <h2 className="mb-5 text-base md:text-lg font-semibold text-gray-800">
+              {role === "admin" ? "Platform Revenue Growth ($)" : role === "seller" ? "Net Earnings Timeline ($)" : "Pre-Approved Budget Scale ($)"}
+            </h2>
+            <ResponsiveContainer width="100%" height={300}>
+              <AreaChart data={currentData.chartData}>
+                <defs>
+                  <linearGradient id="colorGrowth" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#8b5cf6" stopOpacity={0.4}/>
+                    <stop offset="95%" stopColor="#8b5cf6" stopOpacity={0}/>
+                  </linearGradient>
+                </defs>
+                <CartesianGrid strokeDasharray="3 3" stroke="#f3f4f6" />
+                <XAxis dataKey="month" stroke="#9ca3af" fontSize={12} />
+                <YAxis stroke="#9ca3af" fontSize={12} />
+                <Tooltip />
+                <Legend />
+                <Area 
+                  name={role === "admin" ? "Revenue" : role === "seller" ? "Earnings" : "Budget Limit"} 
+                  type="monotone" 
+                  dataKey={role === "admin" ? "revenue" : role === "seller" ? "earnings" : "budgetLimit"} 
+                  stroke="#8b5cf6" 
+                  strokeWidth={2}
+                  fillOpacity={1} 
+                  fill="url(#colorGrowth)" 
+                />
+              </AreaChart>
+            </ResponsiveContainer>
+          </div>
+
+          {/* Chart 3: Performance & Success Matrix (Composed Chart) - NEW */}
+          <div className="rounded-xl border border-gray-200 bg-white p-4 md:p-6 shadow-sm">
+            <h2 className="mb-5 text-base md:text-lg font-semibold text-gray-800">
+              User Interactions vs Success Rate
+            </h2>
+            <ResponsiveContainer width="100%" height={300}>
+              <ComposedChart data={currentData.chartData}>
+                <CartesianGrid stroke="#f3f4f6" />
+                <XAxis dataKey="month" stroke="#9ca3af" fontSize={12} />
+                <YAxis stroke="#9ca3af" fontSize={12} />
+                <Tooltip />
+                <Legend />
+                <Bar name="Platform Activities / Inquiries" dataKey="tasks" barSize={20} fill="#f59e0b" radius={[4, 4, 0, 0]} />
+                <Line name="Success / Conversion Rate (%)" type="monotone" dataKey="successRate" stroke="#10b981" strokeWidth={2} />
+              </ComposedChart>
+            </ResponsiveContainer>
+          </div>
+
+          {/* Chart 4: Categorical Distribution (Pie Chart) */}
+          <div className="rounded-xl border border-gray-200 bg-white p-4 md:p-6 shadow-sm">
+            <h2 className="mb-5 text-base md:text-lg font-semibold text-gray-800">
               {role === "admin" ? "Platform Inventory Spread" : role === "seller" ? "Listings Pipeline Breakdown" : "Engagement Segmentation"}
             </h2>
-
             <ResponsiveContainer width="100%" height={300}>
               <PieChart>
                 <Pie
@@ -248,15 +303,17 @@ export default function DynamicDashboardPage() {
                   ))}
                 </Pie>
                 <Tooltip />
+                <Legend />
               </PieChart>
             </ResponsiveContainer>
           </div>
+
         </div>
       )}
 
       {/* Contextual Activity / Data List */}
-      <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
-        <h2 className="mb-5 text-lg font-semibold text-gray-800">
+      <div className="rounded-xl border border-gray-200 bg-white p-4 md:p-6 shadow-sm">
+        <h2 className="mb-5 text-base md:text-lg font-semibold text-gray-800">
           {currentData.listTitle}
         </h2>
 
