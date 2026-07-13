@@ -69,7 +69,7 @@ const Banner = () => {
     }, [emblaApi]);
 
     return (
-        <section className="relative h-[75vh] w-full overflow-hidden">
+        <section className="relative h-[75vh]  w-full overflow-hidden">
             {/* Slider */}
             <div className="h-full overflow-hidden" ref={emblaRef}>
                 <div className="flex h-full">
@@ -136,22 +136,21 @@ const Banner = () => {
                         {/* Buttons */}
                         <motion.div
                             variants={itemVariants}
-                            className="mt-8 flex flex-col gap-4 sm:flex-row sm:justify-center md:justify-start"
+                            className="mt-8 flex flex-col gap-4 items-center justify-center sm:flex-row md:justify-start"
                         >
-                            <Link href={'/properties'}>
+                            <Link href={'/properties'} className="w-full sm:w-auto">
                                 <Button
                                     size="lg"
-                                    className="h-12 rounded-xl bg-blue-600 px-8 text-base font-semibold shadow-xl transition-all hover:bg-blue-700 hover:shadow-blue-600/20 cursor-pointer"
+                                    className="h-12 w-full sm:w-auto rounded-xl bg-blue-600 px-8 text-base font-semibold shadow-xl transition-all hover:bg-blue-700 hover:shadow-blue-600/20 cursor-pointer"
                                 >
                                     Explore Properties
                                 </Button>
                             </Link>
 
-
                             <Button
                                 size="lg"
                                 variant="outline"
-                                className="h-12 rounded-xl border-white/30 bg-white/10 px-8 text-base font-semibold text-white backdrop-blur-md hover:bg-white hover:text-black"
+                                className="h-12 w-full sm:w-auto rounded-xl border-white/30 bg-white/10 px-8 text-base font-semibold text-white backdrop-blur-md hover:bg-white hover:text-black"
                             >
                                 Contact Agent
                             </Button>
@@ -197,7 +196,7 @@ const Banner = () => {
             <button
                 onClick={() => {
                     emblaApi?.scrollPrev();
-                   
+
                 }}
                 className="absolute left-6 top-1/2 z-20 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/20 text-white backdrop-blur transition hover:bg-white hover:text-black focus:outline-none"
                 aria-label="Previous slide"
@@ -209,7 +208,7 @@ const Banner = () => {
             <button
                 onClick={() => {
                     emblaApi?.scrollNext();
-                    
+
                 }}
                 className="absolute right-6 top-1/2 z-20 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/20 text-white backdrop-blur transition hover:bg-white hover:text-black focus:outline-none"
                 aria-label="Next slide"
