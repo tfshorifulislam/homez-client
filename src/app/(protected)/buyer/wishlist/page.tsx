@@ -48,12 +48,22 @@ const WishlistPage = () => {
 
     const handleRemove = async (propertyId: string) => {
         try {
+
+            const { data: userToken } = await authClient.token();
+
+            if (!userToken) {
+                console.error("Token not found");
+                return;
+            }
+
+
             await fetch(
                 `${process.env.NEXT_PUBLIC_SERVER_URL}/api/wishlist`,
                 {
                     method: "DELETE",
                     headers: {
                         "Content-Type": "application/json",
+                        Authorization: `Bearer ${userToken.token}`,
                     },
                     body: JSON.stringify({
                         propertyId,
