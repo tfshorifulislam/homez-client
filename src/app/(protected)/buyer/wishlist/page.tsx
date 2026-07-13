@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from "react";
-import { useSession } from "@/lib/auth-client";
+import { authClient, useSession } from "@/lib/auth-client";
 import { Property } from "@/lib/api/property";
 import WishlistCard from "@/components/protectedComponent/WishlistCard";
 import { toast } from "react-toastify";
@@ -17,8 +17,21 @@ const WishlistPage = () => {
 
         const fetchWishlist = async () => {
             try {
-                const res = await fetch(
-                    `${process.env.NEXT_PUBLIC_SERVER_URL}/api/wishlist/properties/${session.user.email}`
+
+                const { data: userToken } = await authClient.token();
+
+                if (!userToken) {
+                    console.error("Token not found");
+                    return;
+                }
+
+
+                const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/wishlist/properties/${session.user.email}`,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${userToken.token}`,
+                        },
+                    }
                 );
 
                 const data: Property[] = await res.json();
