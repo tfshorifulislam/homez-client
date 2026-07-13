@@ -1,36 +1,87 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🏡 Homez - Dynamic Real Estate Ecosystem
 
-## Getting Started
+**Homez** is a modern, full-featured, multi-role Real Estate Platform that connects Buyers, Sellers, and Admins in one seamless ecosystem. Built with performance, scalability, and beautiful UX in mind.
 
-First, run the development server:
+![Homez Banner](./public/screenshots/home-page.png)
 
+## ✨ Live Links
+
+- **🌐 Client (Frontend):** [https://homez-two.vercel.app](https://homez-two.vercel.app)
+- **🌐 Backend Server:** [https://homez-server-olive.vercel.app](https://homez-server-olive.vercel.app)
+
+---
+
+## 📸 Screenshots
+
+### Landing Page
+![Landing Page](./public/screenshots/home-page.png)
+
+*(Add more screenshots in the `/public/screenshots` folder for Dashboard, Property Listing, Analytics, etc.)*
+
+---
+
+## 🔥 Key Features
+
+- **🔐 Role-Based Dynamic Dashboards** – Instantly switches UI and functionality based on user role (**Admin**, **Seller**, or **Buyer**)
+- **📊 Rich Data Analytics** – Interactive charts powered by **Recharts**:
+  - Sales trends (Line & Bar)
+  - Revenue & Earnings growth (Area)
+  - Multi-metric comparison (Composed)
+  - Property distribution & Lead pipeline (Pie)
+- **📱 Fully Responsive Design** – Pixel-perfect experience across mobile, tablet, and desktop
+- **⚡ Hydration-Safe UI** – Beautiful pulse skeleton loaders for smooth client-side rendering
+- **🎨 Modern & Clean Aesthetics** – Built with Tailwind CSS and custom components
+- **🔄 Real-time Feel** – Fast navigation and dynamic data updates
+
+---
+
+## 🛠️ Tech Stack
+
+| Layer       | Technology                          |
+|-------------|-------------------------------------|
+| Framework   | Next.js 15 (App Router)            |
+| Language    | TypeScript                         |
+| Styling     | Tailwind CSS                       |
+| Charts      | Recharts                           |
+| Authentication | Custom Auth Integration         |
+| Deployment  | Vercel                             |
+| State       | React Hooks + Context / Zustand    |
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js (v18 or higher)
+- npm / yarn / pnpm
+
+### 1. Clone the Repository
 ```bash
+git clone https://github.com/YOUR_USERNAME/homez.git
+cd homez
+npm install
+NEXT_PUBLIC_API_URL=https://homez-server-olive.vercel.app
+# Add other environment variables as needed
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+src/
+├── app/                 # App Router pages & layouts
+├── components/          # Reusable UI components
+├── features/            # Role-specific features (admin, seller, buyer)
+├── lib/                 # Utilities & API client
+├── hooks/               # Custom React hooks
+├── types/               # TypeScript interfaces
+├── public/
+│   └── screenshots/     # Project screenshots
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+npm run dev      # Start development server
+npm run build    # Production build
+npm run start    # Start production server
+npm run lint     # Run ESLint
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+ ContributingContributions are welcome! Feel free to open issues or submit pull requests.Fork the project
+Create your feature branch (git checkout -b feature/amazing-feature)
+Commit your changes (git commit -m 'Add amazing feature')
+Push to the branch (git push origin feature/amazing-feature)
+Open a Pull Request
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
